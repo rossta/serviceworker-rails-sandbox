@@ -1,0 +1,13 @@
+<div class="tweet" id=<%= dom_id(tweet) %>>
+  <div class="media-item">
+    <%= image_tag tweet.user.profile_image_url_https %>
+    <div class="bd">
+      <div><%= tweet.text %></div>
+    </div>
+  </div>
+  <div class="media-extras">
+    <% tweet.media.each do |img| %>
+      <%= image_tag img.media_url_https, width: "100%" %>
+    <% end %>
+  </div>
+</div>

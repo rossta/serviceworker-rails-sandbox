@@ -1,0 +1,7 @@
+<%= form_tag "", id: "search", method: :get do %>
+  <%= text_field_tag :q %>
+  <%= submit_tag "Search" %>
+<% end %>
+<% cache_if(query, ['tweets', query.parameterize], expires_in: 5.minutes) do %>
+  <%= render tweets %>
+<% end %>

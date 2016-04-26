@@ -10,13 +10,6 @@ $color3: #45ada8;
 $color4: #9de0ad;
 $color5: #e5fcc2;
 
-@import "compass/css3/animation";
-@import "compass/css3/appearance";
-@import "compass/css3/flexbox";
-@import "compass/css3/transform";
-@import "compass/css3/transition";
-@import "compass/utilities/general/clearfix";
-
 @mixin font-smoothing($value: antialiased) {
   @if $value == antialiased {
     -webkit-font-smoothing: antialiased;
@@ -122,13 +115,13 @@ $breakpoints: (mobile: 350px,
 }
 
 @mixin media-container {
-  padding: 0;
-  margin: 0;
-  list-style: none;
   @include clearfix;
+  padding: 0;
+  list-style: none;
 }
 
 @mixin media-item($size: 70px) {
+  @include clearfix;
   float: left;
   overflow:hidden;
 
@@ -145,15 +138,5 @@ $breakpoints: (mobile: 350px,
     float:left;
     margin-right: $size/5.5;
     display:block;
-    border-radius: $size/2;
-  }
-}
-
-@mixin speaker-item($size: 70px) {
-  @include media-item($size);
-
-  img {
-    float:none;
-    margin-right: 0;
   }
 }

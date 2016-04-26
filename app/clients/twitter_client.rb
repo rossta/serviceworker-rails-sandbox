@@ -1,15 +1,15 @@
 class TwitterClient
-  def initialize(account)
-    @account = account
-  end
-
   def client
     @client ||= Twitter::REST::Client.new do |config|
-      config.consumer_key        = ENV.fetch('TWITTER_CONSUMER_KEY')
-      config.consumer_secret     = ENV.fetch('TWITTER_CONSUMER_SECRET')
-      config.access_token        = @account.token
-      config.access_token_secret = @account.secret
+      config.consumer_key        = ENV.fetch "TWITTER_CONSUMER_KEY"
+      config.consumer_secret     = ENV.fetch "TWITTER_CONSUMER_SECRET"
+      config.access_token        = ENV.fetch "TWITTER_ACCESS_TOKEN"
+      config.access_token_secret = ENV.fetch "TWITTER_ACCESS_SECRET"
     end
+  end
+
+  def search(term)
+    client.search(term)
   end
 
   def timeline(*args)

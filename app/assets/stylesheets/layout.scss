@@ -1,0 +1,14 @@
+.container {
+  width: 100%; }
+
+/* For devices larger than 400px */
+@media (min-width: 400px) {
+  .container {
+    width: 60%; }
+}
+
+/* For devices larger than 550px */
+@media (min-width: 550px) {
+  .container {
+    width: 40%; }
+}

@@ -1,0 +1,9 @@
+@import "settings";
+
+.media-container {
+  @include media-container;
+}
+
+.media-item {
+  @include media-item;
+}
