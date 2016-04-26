@@ -1,3 +1,5 @@
+@import "settings";
+
 /* Larger than tablet */
 @media (min-width: 750px) {
   /* Navbar */
@@ -42,7 +44,18 @@
     display: block; }
   /* Re-overiding the width 100% declaration to match size of % based container */
   .has-docked-nav .navbar > .container {
-    width: 80%; }
+    width: $mobileWidth;
+
+    /* For devices larger than 400px */
+    @media (min-width: 400px) {
+      width: $tabletWidth;
+    }
+
+    /* For devices larger than 550px */
+    @media (min-width: 550px) {
+      width: $desktopWidth;
+    }
+  }
 
   /* Popover */
   .popover.open {
