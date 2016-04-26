@@ -2,21 +2,22 @@ source "https://rubygems.org"
 
 gem "rails", "4.2.6"
 gem "pg", "~> 0.15"
+gem "puma"
+
 gem "sass-rails", "~> 5.0"
 gem "uglifier", ">= 1.3.0"
-
 gem "jquery-rails"
 gem "browserify-rails"
 gem "turbolinks"
 gem "sdoc", "~> 0.4.0", group: :doc
 
-gem "puma"
 gem "rack-protection"
 gem "title"
 gem "flutie"
 gem "high_voltage"
 gem "i18n-tasks"
-gem "seed-fu"
+
+gem "twitter"
 
 group :development, :test do
   gem "factory_girl_rails"
@@ -27,6 +28,7 @@ group :development, :test do
   gem "awesome_print"
   gem "dotenv-rails"
   gem "rubocop"
+  gem "seed-fu"
 end
 
 group :development do

@@ -1,0 +1,159 @@
+$subtleColor: #666;
+$primaryColor: #1cb495;
+$linkColor: $primaryColor;
+$primaryHoverColor: #1fcaa7;
+
+$color0: #1f1f1f;
+$color1: #594f4f;
+$color2: #547980;
+$color3: #45ada8;
+$color4: #9de0ad;
+$color5: #e5fcc2;
+
+@import "compass/css3/animation";
+@import "compass/css3/appearance";
+@import "compass/css3/flexbox";
+@import "compass/css3/transform";
+@import "compass/css3/transition";
+@import "compass/utilities/general/clearfix";
+
+@mixin font-smoothing($value: antialiased) {
+  @if $value == antialiased {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  @else {
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+  }
+}
+
+$breakpoints: (mobile: 350px,
+               phablet: 550px,
+               tablet: 750px,
+               desktop: 1000px,
+               hd: 1200px) !default;
+
+// /* Larger than mobile */
+// @media (min-width: 400px) {}
+@mixin mobile {
+  @media (min-width: #{map-get($breakpoints, mobile)}) {
+    @content;
+  }
+}
+
+// /* Larger than phablet (also point when grid becomes active) */
+// @media (min-width: 550px) {}
+@mixin phablet {
+  @media (min-width: #{map-get($breakpoints, phablet)}) {
+    @content;
+  }
+}
+
+// /* Larger than tablet */
+// @media (min-width: 750px) {}
+@mixin tablet {
+  @media (min-width: #{map-get($breakpoints, tablet)}) {
+    @content;
+  }
+}
+
+// /* Larger than desktop */
+// @media (min-width: 1000px) {}
+@mixin desktop {
+  @media (min-width: #{map-get($breakpoints, desktop)}) {
+    @content;
+  }
+}
+
+// /* Larger than Desktop HD */
+// @media (min-width: 1200px) {}
+@mixin hd {
+  @media (min-width: #{map-get($breakpoints, hd)}) {
+    @content;
+  }
+}
+
+@mixin bg-cloudy {
+  background-color: #f5f3f6;
+  color: #000;
+  h1, h2, h3, h4, h5, h6, strong {
+    color: #000;
+  }
+}
+
+@mixin bg-gray {
+  background-color: $color0;
+  color: #FFF;
+  h1, h2, h3, h4, h5, h6, strong {
+    color: #FFF;
+  }
+}
+
+@mixin bg-white {
+  background-color: #fff;
+  color: #000;
+  h1, h2, h3, h4, h5, h6, strong {
+    color: #000;
+  }
+}
+
+@mixin content-section {
+  padding: 1.5em 0;
+  h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0.75em;
+  }
+
+  p {
+    font-size: 1.25em;
+    line-height: 1.5em;
+  }
+
+  @include tablet {
+    padding: 3em 0;
+  }
+
+  @include desktop {
+    padding: 4em 0;
+    h1, h2, h3, h4, h5, h6 {
+      margin-bottom: 1em;
+    }
+  }
+}
+
+@mixin media-container {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  @include clearfix;
+}
+
+@mixin media-item($size: 70px) {
+  float: left;
+  overflow:hidden;
+
+  zoom:1;
+
+  .bd {
+    overflow:hidden;
+    zoom:1;
+  }
+
+  img {
+    width: $size;
+    height: $size;
+    float:left;
+    margin-right: $size/5.5;
+    display:block;
+    border-radius: $size/2;
+  }
+}
+
+@mixin speaker-item($size: 70px) {
+  @include media-item($size);
+
+  img {
+    float:none;
+    margin-right: 0;
+  }
+}
