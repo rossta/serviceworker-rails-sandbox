@@ -11,4 +11,4 @@
 /log/*
 !/log/.keep
 /tmp
-/npm_modules
+/node_modules
