@@ -1,5 +1,14 @@
 class StreamsController < ApplicationController
+  QUERIES = {
+    cats: "from:@EmrgencyKittens filter:images -RT"
+  }.with_indifferent_access
+
   def index
+    @query = search_query
+  end
+
+  def show
+    @query = QUERIES.fetch(params[:id]) { raise ActiveRecord::RecordNotFound }
   end
 
   private
@@ -8,13 +17,12 @@ class StreamsController < ApplicationController
     @client ||= TwitterClient.new
   end
 
-  def query
-    params.fetch(:q, "@EmrgencyKittens")
+  def search_query
+    params.fetch(:q, QUERIES[:cats])
   end
-  helper_method :query
 
-  def tweets
-    @tweets ||= client.search("#{query} filter:images -RT").take(25).map { |t| Tweet.new(t) }
+  def tweets(stream)
+    client.search(stream).take(25).map { |t| Tweet.new(t) }
   end
   helper_method :tweets
 

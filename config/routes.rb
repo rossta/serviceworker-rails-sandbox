@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   root "welcome#index"
 
+  get "offline" => "welcome#offline"
+
   resources :streams
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -14,4 +14,3 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
-require('skel-framework/dist/skel.min.js')
