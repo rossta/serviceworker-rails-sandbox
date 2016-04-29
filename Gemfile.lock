@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/rossta/serviceworker-rails.git
+  revision: 5b3d380e9b6ca27431becc160d74f6d888c64204
+  branch: master
+  specs:
+    serviceworker-rails (0.2.0)
+      railties (>= 3.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -403,6 +411,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   seed-fu
+  serviceworker-rails!
   shoulda-matchers
   spring
   timecop

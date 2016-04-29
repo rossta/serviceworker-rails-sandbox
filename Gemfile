@@ -20,6 +20,8 @@ gem "i18n-tasks"
 
 gem "twitter"
 
+gem "serviceworker-rails", github: "rossta/serviceworker-rails", branch: "master"
+
 group :development, :test do
   gem "factory_girl_rails"
   gem "faker"
