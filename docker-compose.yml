@@ -1,0 +1,37 @@
+version: '2'
+services:
+  db:
+    image: postgres:9.4.5
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - /var/lib/postgresql/data
+
+  gems:
+    image: busybox
+    volumes:
+      - /gems
+
+  node:
+    image: busybox
+    volumes:
+      - /node
+
+  web:
+    build: .
+    command: bin/start
+    ports:
+      - "3000:3000"
+    links:
+      - db
+    volumes:
+      - .:/app
+    volumes_from:
+      - gems
+      - node
+      - db
+    env_file:
+      - .env.docker

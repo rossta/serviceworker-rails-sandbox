@@ -29,7 +29,6 @@ group :development, :test do
   gem "awesome_print"
   gem "dotenv-rails"
   gem "rubocop"
-  gem "seed-fu"
 end
 
 group :development do
@@ -57,6 +56,7 @@ group :test do
   gem "timecop"
   gem "webmock"
   gem "vcr"
+  gem "seed-fu"
 end
 
 gem "newrelic_rpm", ">= 3.7.3"

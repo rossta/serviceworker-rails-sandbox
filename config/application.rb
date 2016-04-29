@@ -8,6 +8,13 @@ Bundler.require(*Rails.groups)
 
 module ServiceworkerRailsSandbox
   class Application < Rails::Application
+    # We want to set up a custom logger which logs to STDOUT.
+    # Docker expects your application to log to STDOUT/STDERR and to be ran
+    # in the foreground.
+    config.log_level = :debug
+    config.log_tags  = [:subdomain, :uuid]
+    config.logger    = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
