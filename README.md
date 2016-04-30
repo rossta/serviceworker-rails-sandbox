@@ -22,7 +22,7 @@ these scripts will not tie up page rendering
 
 So you want to use Service Workers in your Rails app? Consider that the Rails asset pipeline bundles JavaScript assets so that they're typically finger-printed, heavily cached, and served out of the `/assets` directory. While we'd like to take advantage of the asset pipeline for transpiling our Service Worker scripts just like any other JavaScript assets, we need flexibility for how these assets are served to the client.
 
-This is where the [serviceworker-rails](https://github.com/rossta/serviceworker-rails) gem comes in. Using [serviceworker-rails] in your Rails app allows you to map Service Worker endpoints to bundled Rails assets and adds the appropriate (configurable) response headers. You can still take advantage of the Rails pipeline in development and production!
+This is where the [serviceworker-rails](https://github.com/rossta/serviceworker-rails) gem comes in. Using `serviceworker-rails` in your Rails app allows you to map Service Worker endpoints to bundled Rails assets and adds the appropriate (configurable) response headers. You can still take advantage of Rails pipeline with Service Workers in development and production!
 
 The sandbox [`config/application.rb`](https://github.com/rossta/serviceworker-rails-sandbox/blob/master/config/application.rb) provides several examples for customizing how service worker endpoints should map to assets in the Rails asset pipeline.
 
