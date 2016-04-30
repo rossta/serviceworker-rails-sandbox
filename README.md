@@ -1,4 +1,4 @@
-# ServiceWorker Rails Sandbox
+# Service Workers on Rails
 
 This sandbox demonstrates various use cases for Service Workers on Rails. Integration of Service Workers with the Rails asset pipeline is provided by the [serviceworker-rails](https://github.com/rossta/serviceworker-rails).
 
@@ -24,8 +24,7 @@ So you want to use Service Workers in your Rails app? Consider that the Rails as
 
 This is where the [serviceworker-rails](https://github.com/rossta/serviceworker-rails) gem comes in. Using [serviceworker-rails] in your Rails app allows you to map Service Worker endpoints to bundled Rails assets and adds the appropriate (configurable) response headers. You can still take advantage of the Rails pipeline in development and production!
 
-The sandbox [`config/application.rb`]() provides several examples for
-customizing your service worker setup in your Rails app.
+The sandbox [`config/application.rb`](https://github.com/rossta/serviceworker-rails-sandbox/blob/master/config/application.rb) provides several examples for customizing how service worker endpoints should map to assets in the Rails asset pipeline.
 
 ## Resources
 
