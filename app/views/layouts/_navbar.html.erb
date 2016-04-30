@@ -3,6 +3,16 @@
     <ul class="navbar-list">
       <li class="navbar-item"><a class="navbar-link" href="/">ServiceWorker Rails Sandbox</a></li>
       <li class="navbar-item">
+        <a class="navbar-link" href="#" data-popover="#demosNavPopover">Demos</a>
+        <div id="demosNavPopover" class="popover">
+          <ul class="popover-list">
+            <li class="popover-item">
+              <%= link_to "Offline fallback", page_path("offline-fallback/demo"), class: "popover-link" %>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="navbar-item">
         <a class="navbar-link" href="https://github.com/rossta/serviceworker-rails-sandbox" data-popover="#codeNavPopover">Code</a>
         <div id="codeNavPopover" class="popover">
           <ul class="popover-list">

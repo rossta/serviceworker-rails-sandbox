@@ -3,6 +3,10 @@
 .nav-container {
   min-height: 70px; }
 
+.navbar-link {
+  text-transform: uppercase;
+  font-size: 1em; }
+
 /* Larger than tablet */
 @media (min-width: 750px) {
   /* Navbar */
@@ -30,7 +34,7 @@
     margin-bottom: 0; }
   .navbar-link {
     text-transform: uppercase;
-    font-size: 11px;
+    font-size: .9em;
     font-weight: 600;
     letter-spacing: .2rem;
     margin-right: 35px;
@@ -51,13 +55,11 @@
 
     /* For devices larger than 400px */
     @media (min-width: 400px) {
-      width: $tabletWidth;
-    }
+      width: $tabletWidth; }
 
     /* For devices larger than 550px */
     @media (min-width: 550px) {
-      width: $desktopWidth;
-    }
+      width: $desktopWidth; }
   }
 
   /* Popover */

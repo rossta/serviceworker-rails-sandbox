@@ -44,7 +44,7 @@ require('skel-framework/dist/skel.min.js');
       e.preventDefault()
       closePopover();
       let popover = $($(this).data('popover'));
-      popover.toggleClass('open')
+      popover.toggleClass('open');
       e.stopImmediatePropagation();
     }
 
@@ -53,12 +53,6 @@ require('skel-framework/dist/skel.min.js');
         $('.popover').removeClass('open')
       }
     }
-
-    $("#button").click(function() {
-      $('html, body').animate({
-          scrollTop: $("#elementtoScrollToID").offset().top
-      }, 2000);
-  });
 
     function resize() {
       $body.removeClass('has-docked-nav')

@@ -1,16 +1,7 @@
 @import "settings";
 
-.container {
-  width: $mobileWidth; }
+.container { max-width: 575px; }
 
-/* For devices larger than 400px */
-@media (min-width: 400px) {
-  .container {
-    width: $tabletWidth; }
-}
-
-/* For devices larger than 550px */
-@media (min-width: 550px) {
-  .container {
-    width: $desktopWidth; }
+footer {
+  padding: 0 2em;
 }
