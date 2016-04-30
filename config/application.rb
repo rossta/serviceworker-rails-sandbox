@@ -34,6 +34,8 @@ module ServiceworkerRailsSandbox
     config.browserify_rails.commandline_options = "-t babelify"
 
     config.serviceworker.routes.draw do
+      get "/serviceworker.js", asset: "home/serviceworker.js"
+
       get "/pages/offline-fallback/serviceworker.js", asset: "offline-fallback/serviceworker.js"
     end
   end
