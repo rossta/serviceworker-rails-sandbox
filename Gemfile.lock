@@ -1,7 +1,5 @@
-GIT
-  remote: git://github.com/rossta/serviceworker-rails.git
-  revision: 5b3d380e9b6ca27431becc160d74f6d888c64204
-  branch: master
+PATH
+  remote: vendor/gems/serviceworker-rails
   specs:
     serviceworker-rails (0.2.0)
       railties (>= 3.1)
