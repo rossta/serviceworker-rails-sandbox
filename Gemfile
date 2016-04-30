@@ -63,4 +63,5 @@ group :test do
   gem "seed-fu"
 end
 
+gem "rails_12factor", group: :production
 gem "newrelic_rpm", ">= 3.7.3"
