@@ -1,21 +1,21 @@
-default: &default
-  adapter: postgresql
-  encoding: unicode
-  # For details on connection pooling, see rails configuration guide
-  # http://guides.rubyonrails.org/configuring.html#database-pooling
-  pool: 5
-  min_messages: WARNING
-  username: postgres
-  password: postgres
-  host: db
-
-development:
-  <<: *default
-  database: serviceworker_rails_sandbox_development
-
-test:
-  <<: *default
-  database: serviceworker_rails_sandbox_test
+# default: &default
+#   adapter: postgresql
+#   encoding: unicode
+#   # For details on connection pooling, see rails configuration guide
+#   # http://guides.rubyonrails.org/configuring.html#database-pooling
+#   pool: 5
+#   min_messages: WARNING
+#   username: postgres
+#   password: postgres
+#   host: db
+#
+# development:
+#   <<: *default
+#   database: serviceworker_rails_sandbox_development
+#
+# test:
+#   <<: *default
+#   database: serviceworker_rails_sandbox_test
 
 # On Heroku and other platform providers, you may have a full connection URL
 # available as an environment variable. For example:
@@ -27,3 +27,7 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
+test:
+  url: <%= ENV.fetch('DATABASE_URL').gsub(/serviceworker_rails/, 'serviceworker_rails_test') %>
+development:
+  url: <%= ENV.fetch('DATABASE_URL').gsub(/serviceworker_rails/, 'serviceworker_rails_development') %>
