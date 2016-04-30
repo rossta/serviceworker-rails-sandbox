@@ -2,4 +2,5 @@
 
 bundle check || bundle install
 
-rm ./tmp/pids/server.pid && ./bin/rails s -b 0.0.0.0
+rm ./tmp/pids/server.pid > /dev/null 2>&1
+./bin/rails s -b 0.0.0.0
