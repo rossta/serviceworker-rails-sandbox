@@ -32,5 +32,9 @@ module ServiceworkerRailsSandbox
 
     # Use ES2015 in asset pipeline
     config.browserify_rails.commandline_options = "-t babelify"
+
+    config.serviceworker.routes.draw do
+      get "/pages/offline-fallback/serviceworker.js", asset: "offline-fallback/serviceworker.js"
+    end
   end
 end

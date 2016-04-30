@@ -24,7 +24,7 @@ services:
     build: .
     command: bin/start
     ports:
-      - "3000:3000"
+      - "5826:3000"
     links:
       - db
     volumes:

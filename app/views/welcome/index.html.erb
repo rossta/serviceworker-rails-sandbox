@@ -10,8 +10,13 @@
   <% end %>
   gem on GitHub.
 </p>
+<h3>Demos</h3>
 <ul>
   <li>
-    <%= link_to "Offline Access", stream_path("cats") %>
+    <%= link_to "Offline Fallback", page_path("offline-fallback/demo") %>
   </li>
 </ul>
+
+<p>
+  Here are some <%= link_to 'Cats', stream_path('cats') %>.
+</p>

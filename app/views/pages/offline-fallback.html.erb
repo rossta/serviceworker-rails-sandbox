@@ -1,0 +1,24 @@
+<h2>Offline Fallback</h2>
+
+  <p>
+    <strong>Objective</strong>: To display an offline page when the network can't connect.
+  </p>
+
+<div class="callout">
+  <p>
+    Switch off the network connection and <%= link_to "refresh this page", "?", id: "refresh" %>
+    to see what it looks like "offline".
+  </p>
+  <p>
+    To work offline in <strong>Firefox</strong>, simply select <em>File</em> > <em>Work Offline</em>.
+  </p>
+  <p>
+    In <strong>Chrome</strong>, you can simulate a disabled network using the Developer Tools. Under the <em>Network</em> tab,
+    select <em>Offline (0ms, 0kb/s, 0kb/s)</em>.
+  </p>
+  <p>
+    <%= image_tag 'screenshots/developer_tools_network_offline_select.jpg', width: '100%' %>
+  </p>
+</div>
+
+<%= javascript_include_tag 'offline-fallback' %>

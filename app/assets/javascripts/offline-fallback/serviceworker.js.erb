@@ -1,0 +1,41 @@
+import {cacheKey} from 'utils/caching';
+import Logger from 'utils/logger';
+const logger = new Logger('[offline-fallback/serviceworker]');
+
+function cacheOfflineResources() {
+  logger.log('install event started.');
+
+  return caches
+    .open(cacheKey('offline'))
+    .then((cache) => cache.addAll([
+      "/offline",
+      "<%= asset_path 'pics/cash-cat.jpg' %>",
+      "<%= asset_path 'application.css' %>"
+    ]))
+    .then(() => {
+      logger.log('installation event complete!');
+    });
+}
+
+function fetchOrOffline(request) {
+  logger.log('fetch event started', request.url);
+
+  return fetch(request)
+    .catch((error) => {
+      logger.error('fetch failed, falling back to offline response in cache', error);
+      return caches.open(cacheKey('offline')).then((cache) => cache.match('/offline'));
+    });
+}
+
+self.addEventListener('install', function onInstall(event) {
+  event.waitUntil(cacheOfflineResources());
+});
+
+self.addEventListener('fetch', function onFetch(event) {
+  let request = event.request;
+
+  if (request.method !== 'GET') { return; }
+  if (!request.headers.get('accept').includes('text/html')) { return; }
+
+  event.respondWith(fetchOrOffline(request));
+});

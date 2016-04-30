@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ServiceworkerRailsSandbox</title>
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+  </head>
+  <body>
+    <div class="nav-container container">
+      <%= render "layouts/navbar" %>
+    </div>
+    <main class="container">
+      <%= yield %>
+    </main>
+    <footer>
+    </footer>
+  </body>
+</html>

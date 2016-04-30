@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   get "offline" => "welcome#offline"
 
+  get 'pages/offline-fallback/demo' => 'high_voltage/pages#show', id: 'offline-fallback'
+
   resources :streams
 
   # The priority is based upon order of creation: first created -> highest priority.
