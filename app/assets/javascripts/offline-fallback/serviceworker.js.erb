@@ -8,7 +8,7 @@ function cacheOfflineResources() {
   return caches
     .open(cacheKey('offline'))
     .then((cache) => cache.addAll([
-      "/offline",
+      "/pages/offline-fallback/offline",
       "<%= asset_path 'pics/cash-cat.jpg' %>",
       "<%= asset_path 'application.css' %>"
     ]))
@@ -20,11 +20,24 @@ function cacheOfflineResources() {
 function fetchOrOffline(request) {
   logger.log('fetch event started', request.url);
 
+  if (request.method !== 'GET') { return; }
+
   return fetch(request)
     .catch((error) => {
       logger.error('fetch failed, falling back to offline response in cache', error);
-      return caches.open(cacheKey('offline')).then((cache) => cache.match('/offline'));
+      return offlineResponse(request);
     });
+}
+
+function offlineResponse(request) {
+  let match;
+  if (request.headers.get('accept').includes('text/html')) {
+    match = '/pages/offline-fallback/offline';
+  } else {
+    match = request;
+  }
+
+  return caches.open(cacheKey('offline')).then((cache) => cache.match(match))
 }
 
 self.addEventListener('install', function onInstall(event) {
@@ -35,7 +48,6 @@ self.addEventListener('fetch', function onFetch(event) {
   let request = event.request;
 
   if (request.method !== 'GET') { return; }
-  if (!request.headers.get('accept').includes('text/html')) { return; }
 
   event.respondWith(fetchOrOffline(request));
 });

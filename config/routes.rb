@@ -2,11 +2,11 @@ Rails.application.routes.draw do
 
   root "welcome#index"
 
-  get "offline" => "welcome#offline"
-
   get 'pages/offline-fallback/demo' => 'high_voltage/pages#show', id: 'offline-fallback'
 
   resources :streams
+
+  get "/*path/offline" => "welcome#offline"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

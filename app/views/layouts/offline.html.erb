@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ServiceworkerRailsSandbox</title>
+    <title>Service Workers on Rails: Offline</title>
     <%= stylesheet_link_tag    'application', media: 'all' %>
   </head>
   <body>
     <div class="nav-container container">
       <%= render "layouts/navbar" %>
+    </div>
+    <div class="container">
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
     </div>
     <main class="container">
       <%= yield %>
