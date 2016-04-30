@@ -18,7 +18,7 @@ This means the are some considerations for hosting Service Workers:
 - service workers should not be cached: browsers install service workers in the background so requesting and evaluating
 these scripts will not tie up page rendering
 
-### Service Workers on Rails
+### Rails integration
 
 So you want to use Service Workers in your Rails app? Consider that the Rails asset pipeline bundles JavaScript assets so that they're typically finger-printed, heavily cached, and served out of the `/assets` directory. While we'd like to take advantage of the asset pipeline for transpiling our Service Worker scripts just like any other JavaScript assets, we need flexibility for how these assets are served to the client.
 
