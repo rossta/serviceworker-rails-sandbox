@@ -1,0 +1,8 @@
+en:
+  meta:
+    title: "Service Workers on Rails"
+    description: "Service Workers on Rails is an application that demonstrates the use of the new Service Worker JavaScript API with Ruby on Raill applications using the serviceworker-rails gem"
+    keywords: "Service Workers, Ruby, Rails, Ruby on Rails, serviceworker-rails gem, GitHub, Ross Kaffenberger"
+    author: "Ross Kaffenberger"
+    image: "pics/rubiks-cube.jpeg"
+    site_name: "serviceworkers-rails-sandbox"

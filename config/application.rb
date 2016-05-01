@@ -33,6 +33,10 @@ module ServiceworkerRailsSandbox
     # Use ES2015 in asset pipeline
     config.browserify_rails.commandline_options = "-t babelify"
 
+    # Fail fast for missing I18n translations
+    config.action_view.raise_on_missing_translations = true
+
+    # Map serviceworker routes to assets
     config.serviceworker.routes.draw do
       get "/serviceworker.js", asset: "home/serviceworker.js"
 
