@@ -26,7 +26,7 @@ module MetaHelper
       { property: "og:title", content: t('meta.title') },
       { charset: "utf-8" },
       { "http-equiv" => 'X-UA-Compatible', content: 'IE: edge;chrome: 1' },
-      { name: "viewport", content: "width: device-width, initial-scale: 1, maximum-scale: 1" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1"},
       { name: "mobile-web-app-capable", content: "yes" }
     ]
   end
