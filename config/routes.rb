@@ -4,7 +4,6 @@ Rails.application.routes.draw do
 
   resources :streams
 
-  get "/offline" => "welcome#offline"
   get "/*path/offline" => "welcome#offline"
 
   get "/pages/*id" => "pages#show", as: :page, format: false

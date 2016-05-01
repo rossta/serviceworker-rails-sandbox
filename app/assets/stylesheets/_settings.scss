@@ -159,3 +159,9 @@ $breakpoints: (mobile: 350px,
     display:block;
   }
 }
+
+@mixin callout {
+  background-color: ghostwhite;
+  padding: 2em;
+  margin: 0 -2em;
+}

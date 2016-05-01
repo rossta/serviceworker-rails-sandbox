@@ -41,6 +41,7 @@ module ServiceworkerRailsSandbox
       get "/serviceworker.js", asset: "home/serviceworker.js"
 
       get "/pages/offline-fallback/serviceworker.js", asset: "offline-fallback/serviceworker.js"
+      get "/pages/cache-then-network/serviceworker.js", asset: "cache-then-network/serviceworker.js"
     end
 
     # Custom settings

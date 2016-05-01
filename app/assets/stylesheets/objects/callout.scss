@@ -1,5 +1,5 @@
+@import "settings";
+
 .callout {
-  background-color: ghostwhite;
-  padding: 2em;
-  margin: 0 -2em;
+  @include callout;
 }

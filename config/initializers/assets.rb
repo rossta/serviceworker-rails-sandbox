@@ -11,6 +11,8 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.precompile += %w( search.js )
 Rails.application.config.assets.precompile += %w(
   home/serviceworker.js
+  cache-then-network/serviceworker.js
+  cache-then-network.js
   offline-fallback/serviceworker.js
   offline-fallback.js
 )

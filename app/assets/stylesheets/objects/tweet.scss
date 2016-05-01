@@ -1,5 +1,8 @@
+@import "settings";
+
 .tweet {
-  padding: 2em;
+  @include callout;
+
   margin-bottom: 1em;
   background-color: #f8f8ff;
 
@@ -9,5 +12,9 @@
 
   .media-extras {
     padding: 0 0 1em;
+  }
+
+  .tweet-img {
+    width: 100%;
   }
 }

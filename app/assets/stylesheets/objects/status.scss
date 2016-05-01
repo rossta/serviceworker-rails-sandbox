@@ -1,0 +1,12 @@
+.status {
+  background: #c1f5d1;
+  padding: 0.5em 1em;
+
+  .refresh {
+    float: right;
+  }
+
+  &.cache {
+    background: #f7efb7;
+  }
+}
