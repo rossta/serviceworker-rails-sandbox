@@ -14,6 +14,21 @@ $color3: #45ada8;
 $color4: #9de0ad;
 $color5: #e5fcc2;
 
+@mixin clearfix() {
+  overflow: hidden;
+  &:before,
+  &:after {
+    content: "";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+  &{
+    *zoom: 1;
+  }
+}
+
 // @mixin font-smoothing($value: antialiased) {
 //   @if $value == antialiased {
 //     -webkit-font-smoothing: antialiased;
