@@ -30,11 +30,11 @@ module ServiceworkerRailsSandbox
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
 
+    # Ensure trailing slash to provide service worker scopes at path roots
+    config.action_controller.default_url_options = { trailing_slash: true }
+
     # Use ES2015 in asset pipeline
     config.browserify_rails.commandline_options = "-t babelify"
-
-    # Fail fast for missing I18n translations
-    config.action_view.raise_on_missing_translations = true
 
     # Map serviceworker routes to assets
     config.serviceworker.routes.draw do
@@ -42,5 +42,9 @@ module ServiceworkerRailsSandbox
 
       get "/pages/offline-fallback/serviceworker.js", asset: "offline-fallback/serviceworker.js"
     end
+
+    # Custom settings
+    config.settings = ActiveSupport::OrderedOptions.new
+    config.settings.google_analytics_tracking_id = 'UA-xxxxxxxx-x'
   end
 end

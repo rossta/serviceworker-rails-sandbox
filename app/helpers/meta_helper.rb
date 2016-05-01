@@ -1,5 +1,17 @@
 module MetaHelper
+  def metatag(attrs)
+    "<meta #{attrs.map { |k,v| %Q|#{k}=\"#{v}\"| }.join(" ")}>"
+  end
+
   def site_metatags
+    Rails.cache.fetch('site_metatags') do
+      site_metadata.map do |attrs|
+        metatag(attrs)
+      end.join("\n").html_safe
+    end
+  end
+
+  def site_metadata
     [
       { name: "description", content: t('meta.description') },
       { name: "keywords", content: t('meta.keywords') },
@@ -16,8 +28,6 @@ module MetaHelper
       { "http-equiv" => 'X-UA-Compatible', content: 'IE: edge;chrome: 1' },
       { name: "viewport", content: "width: device-width, initial-scale: 1, maximum-scale: 1" },
       { name: "mobile-web-app-capable", content: "yes" }
-    ].map do |attrs|
-      "<meta #{attrs.map { |k,v| %Q|#{k}=\"#{v}\"| }.join(" ")}>"
-    end.join("\n").html_safe
+    ]
   end
 end
