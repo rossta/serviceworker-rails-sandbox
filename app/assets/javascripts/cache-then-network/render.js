@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 let target;
 
 function render(html) {
