@@ -65,6 +65,7 @@
   /* Popover */
   .popover.open {
     display: block;
+    z-index: 1;
   }
   .popover {
     display: none;

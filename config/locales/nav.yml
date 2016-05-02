@@ -1,0 +1,6 @@
+en:
+  nav:
+    caching:
+      - "Cache then Network"
+    offline:
+      - "Offline Fallback"

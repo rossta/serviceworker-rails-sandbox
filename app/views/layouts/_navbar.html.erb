@@ -6,21 +6,16 @@
         <a class="navbar-link" href="#" data-popover="#demosNavPopover">Demos</a>
         <div id="demosNavPopover" class="popover">
           <ul class="popover-list">
-            <li class="popover-item">
-              <%= link_to "Offline fallback", page_path("offline-fallback"), class: "popover-link" %>
-            </li>
+            <% demo_navbar.each do |title, path| %>
+              <li class="popover-item">
+                <%= link_to title, page_path(path), class: "popover-link" %>
+              </li>
+            <% end %>
           </ul>
         </div>
       </li>
       <li class="navbar-item">
-        <a class="navbar-link" href="https://github.com/rossta/serviceworker-rails-sandbox" data-popover="#codeNavPopover">Code</a>
-        <div id="codeNavPopover" class="popover">
-          <ul class="popover-list">
-            <li class="popover-item">
-              <a class="popover-link" href="#example">Example</a>
-            </li>
-          </ul>
-        </div>
+        <a class="navbar-link" href="https://github.com/rossta/serviceworker-rails-sandbox">GitHub</a>
       </li>
     </ul>
   </div>
