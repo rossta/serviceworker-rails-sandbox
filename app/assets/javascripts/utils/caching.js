@@ -1,4 +1,4 @@
-const version = 'v04302016-4';
+const version = 'v05022016-1';
 
 function cacheKey() {
   return [version, ...arguments].join(':');
