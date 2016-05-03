@@ -36,14 +36,6 @@ module ServiceworkerRailsSandbox
     # Use ES2015 in asset pipeline
     config.browserify_rails.commandline_options = "-t babelify"
 
-    # Map serviceworker routes to assets
-    config.serviceworker.routes.draw do
-      get "/serviceworker.js", asset: "home/serviceworker.js"
-
-      get "/pages/offline-fallback/serviceworker.js", asset: "offline-fallback/serviceworker.js"
-      get "/pages/cache-then-network/serviceworker.js", asset: "cache-then-network/serviceworker.js"
-    end
-
     # Custom settings
     config.settings = ActiveSupport::OrderedOptions.new
     config.settings.google_analytics_tracking_id = 'UA-xxxxxxxx-x'
