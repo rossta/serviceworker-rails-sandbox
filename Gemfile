@@ -21,6 +21,7 @@ gem "i18n-tasks"
 
 gem "twitter"
 
+gem "non-stupid-digest-assets"
 gem "serviceworker-rails", path: "vendor/gems/serviceworker-rails"
 
 group :development, :test do
