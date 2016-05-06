@@ -1,0 +1,13 @@
+{
+  "name": "Push Simple - Service Worker Rails Sandbox",
+  "short_name": "push-simple",
+  "start_url": "./push-simple/",
+  "display": "standalone",
+   "icons": [{
+     "src": "<%= image_path "turtle-logo-192x192.png" %>",
+    "sizes": "192x192",
+    "type": "image/png"
+  }],
+  "gcm_sender_id": "<%= ENV.fetch('GOOGLE_CLOUD_MESSAGE_PROJECT', 'GOOGLE_CLOUD_MESSAGE_PROJECT') %>",
+  "gcm_user_visible_only": true
+}

@@ -1,5 +1,3 @@
-# Be sure to restart your server when you modify this file.
-
 # Version of your assets, change this if you want to expire all your assets.
 Rails.application.config.assets.version = '1.0'
 
@@ -15,4 +13,7 @@ Rails.application.config.assets.precompile += %w(
   cache-then-network.js
   offline-fallback/serviceworker.js
   offline-fallback.js
+  push-simple/serviceworker.js
+  push-simple.js
+  push-simple/manifest.json
 )

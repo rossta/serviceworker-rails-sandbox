@@ -4,3 +4,5 @@ en:
       - "Cache then Network"
     offline:
       - "Offline Fallback"
+    push:
+      - "Push Simple"

@@ -10,5 +10,9 @@ export default class Logger {
   error() {
     console.error(this.label, ...arguments);
   }
+
+  warn() {
+    console.warn(this.label, ...arguments);
+  }
 }
 

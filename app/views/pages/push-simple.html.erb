@@ -1,0 +1,22 @@
+<% content_for :head do %>
+  <link rel="manifest" href="manifest.json">
+<% end %>
+
+<h2>Push Simple</h2>
+
+  <p>
+    <strong>Objective</strong>: Simple example of the Web Push API through Service Worker. Send notifications to users even when the page is not open.
+  </p>
+
+<div class="callout">
+  <div class="push-simple-actions">
+    <h4>Demo</h4>
+    <label for="push-button" class="js-push-button-label">Enable Push Messages</label>
+    <div class="switch">
+      <input id="push-button" class="cmn-toggle cmn-toggle-round-flat js-push-button" type="checkbox">
+      <label for="push-button"></label>
+    </div>
+  </div>
+</div>
+
+<%= javascript_include_tag 'push-simple' %>
