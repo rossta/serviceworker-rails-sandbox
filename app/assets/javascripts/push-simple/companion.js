@@ -16,7 +16,7 @@ window.addEventListener("load", function onLoad() {
 if (navigator.serviceWorker) {
   logger.log('Registering serviceworker');
   navigator.serviceWorker.register('serviceworker.js', { scope: './' })
-    .then(initializeState);
+  .then(initializeState);
 } else {
   logger.warn('Service workers are not supported in your browser');
 }
@@ -37,29 +37,29 @@ function initializeState() {
   }
 
   navigator.serviceWorker.ready
-    .then((serviceWorkerRegistration) => {
-      logger.log('Initializing push button state');
-      serviceWorkerRegistration.pushManager.getSubscription()
-        .then((subscription) => {
-          let pushButton = document.querySelector('.js-push-button');
+  .then((serviceWorkerRegistration) => {
+    logger.log('Initializing push button state');
+    serviceWorkerRegistration.pushManager.getSubscription()
+    .then((subscription) => {
+      let pushButton = document.querySelector('.js-push-button');
 
-          if (!subscription) {
-            logger.log('You are not currently subscribed to push notifications');
-            pushButtonUnsubscribed();
-            return;
-          }
+      if (!subscription) {
+        logger.log('You are not currently subscribed to push notifications');
+        pushButtonUnsubscribed();
+        return;
+      }
 
-          // TODO
-          // Send subscription.endpoint to server and save in data store to
-          // send a push message at a later date
-          // sendSubscriptionToServer(subscription);
-          logger.log('You are currently subscribed to push notifications');
-          pushButtonSubscribed();
-        })
-        .catch((error) => {
-          logger.warn('Error during getSubscription()', error);
-        });
+      // TODO
+      // Send subscription.endpoint to server and save in data store to
+      // send a push message at a later date
+      sendSubscriptionToServer(subscription);
+      logger.log('You are currently subscribed to push notifications', subscription);
+      pushButtonSubscribed();
     })
+    .catch((error) => {
+      logger.warn('Error during getSubscription()', error);
+    });
+  })
 
 }
 
@@ -69,25 +69,25 @@ function subscribe() {
   navigator.serviceWorker.ready.then((serviceWorkerRegistration) => {
 
     serviceWorkerRegistration.pushManager
-      .subscribe({userVisibleOnly: true})
-      .then((subscription) => {
-        pushButtonSubscribed();
+    .subscribe({userVisibleOnly: true})
+    .then((subscription) => {
+      pushButtonSubscribed();
 
-        logger.log('Permission to send notifications granted', subscription);
-        // TODO
-        // Send subscription.endpoint to server and save in data store to
-        // send a push message at a later date
-        // sendSubscriptionToServer(subscription);
-      })
-      .catch((e) => {
-        if (Notification.permission === 'denied') {
-          logger.warn('Permission to send notifications denied');
-          disablePushButton();
-        } else {
-          logger.error('Unable to subscribe to push', e);
-          pushButtonUnsubscribed();
-        }
-      })
+      logger.log('Permission to send notifications granted', subscription, JSON.stringify(subscription));
+      // TODO
+      // Send subscription.endpoint to server and save in data store to
+      // send a push message at a later date
+      // sendSubscriptionToServer(subscription);
+    })
+    .catch((e) => {
+      if (Notification.permission === 'denied') {
+        logger.warn('Permission to send notifications denied');
+        disablePushButton();
+      } else {
+        logger.error('Unable to subscribe to push', e);
+        pushButtonUnsubscribed();
+      }
+    })
   })
 }
 
@@ -97,26 +97,26 @@ function unsubscribe() {
   pushButton.disabled = true;
 
   navigator.serviceWorker.ready
-    .then((serviceWorkerRegistration) => {
-      serviceWorkerRegistration.pushManager.getSubscription()
-        .then((subscription) => {
-          if (!subscription) {
-            return pushButtonUnsubscribed();
-          }
+  .then((serviceWorkerRegistration) => {
+    serviceWorkerRegistration.pushManager.getSubscription()
+    .then((subscription) => {
+      if (!subscription) {
+        return pushButtonUnsubscribed();
+      }
 
-          logger.log('Unsubscribing from push notifications', subscription);
+      logger.log('Unsubscribing from push notifications', subscription);
 
-          let subscriptionId = subscription.subscriptionId;
-          // TODO
-          // Remove subscriptionId from backend
+      let subscriptionId = subscription.subscriptionId;
+      // TODO
+      // Remove subscriptionId from backend
 
-          subscription.unsubscribe()
-            .then(pushButtonUnsubscribed)
-            .catch((e) => {
-              logger.error('Error thrown while unsubscribing from push messaging', e);
-            })
-        })
+      subscription.unsubscribe()
+      .then(pushButtonUnsubscribed)
+      .catch((e) => {
+        logger.error('Error thrown while unsubscribing from push messaging', e);
+      })
     })
+  })
 }
 
 function pushButtonUnsubscribed() {
@@ -159,4 +159,33 @@ function getPushButton() {
 
 function setPushLabel(text) {
   return document.querySelector('.js-push-button-label').textContent = text;
+}
+
+function sendSubscriptionToServer(subscription) {
+  window.usersubscription = JSON.stringify(subscription);
+  let body = JSON.stringify({
+    subscription: subscription,
+    type: "google"
+  });
+
+  fetch("/subscribe", {
+    headers: formHeaders(),
+    method: 'POST',
+    credentials: 'include',
+    body: body
+  })
+    .catch((e) => {
+      logger.error("Could not save subscription", e);
+    });
+}
+
+function formHeaders() {
+  return new Headers({
+    'Content-Type': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest',
+    'X-CSRF-Token': authenticityToken(),
+  });
+}
+function authenticityToken() {
+  return document.querySelector('meta[name=csrf-token]').content;
 }

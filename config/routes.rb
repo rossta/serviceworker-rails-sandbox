@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   resources :streams
 
+  post "/subscribe" => "subscriptions#create"
+
   get "/*path/offline" => "welcome#offline"
 
   get "/*id" => "pages#show", as: :page, format: false
