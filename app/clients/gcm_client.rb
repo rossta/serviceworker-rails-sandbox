@@ -17,7 +17,7 @@ class GCMClient
     validate_message(message, padding)
     validate_subscription(subscription)
 
-    client_public_key = Base64.urlsafe_decode64(subscription.dig(:keys, :p256h))
+    client_public_key = Base64.urlsafe_decode64(subscription.dig(:keys, :p256dh))
     client_auth_token = Base64.urlsafe_decode64(subscription.dig(:keys, :auth))
 
     validate_length(client_public_key, 65, "subscription public key")
@@ -33,8 +33,22 @@ class GCMClient
 
     prk = hkdf(client_auth_token, shared_secret, AUTH_INFO, 32);
 
-    context = create_context(type, client_public_key, server_public_key)
+    context = create_context(client_public_key, server_public_key)
 
+    content_encryption_key_info = create_info("aesgcm", context)
+
+    content_encryption_key = hkdf(salt, prk, content_encryption_key_info, 16);
+
+    nonce_info = create_info('nonce', context)
+    nonce = hkdf(salt, prk, nonce_info, 12)
+
+    cipher_text = encrypt_payload(plaintext, content_encryption_key, nonce)
+
+    {
+      cipher_text: cipher_text,
+      salt: salt,
+      server_public_key: server_public_key
+    }
     # OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new("sha256"), secret_key, string)
 
     # padding = make_padding(padding_length)
@@ -69,7 +83,34 @@ class GCMClient
     # %{ciphertext: ciphertext, salt: salt, server_public_key: server_public_key}
   end
 
-  def create_context(type, client_public_key, server_public_key)
+  def encrypt_payload(plaintext, content_encryption_key, nonce)
+    cipher = OpenSSL::Cipher.new("aes-128-gcm")
+    cipher.encrypt
+    cipher.key = content_encryption_key
+    cipher.iv = nonce
+    cipher_text = cipher.update(plaintext)
+    cipher.final
+    cipher_text + cipher.auth_tag
+
+    # {cipher_text, cipher_tag} = :crypto.block_encrypt(:aes_gcm, content_encryption_key, nonce, {"", plaintext})
+    # cipher_text <> cipher_tag
+
+    # const cipher = crypto.createCipheriv('id-aes128-GCM', contentEncryptionKey, nonce);
+    # const result = cipher.update(plaintext);
+    # cipher.final();
+    #
+    # return Buffer.concat([result, cipher.getAuthTag()]);
+  end
+
+  def create_info(type, context)
+    "Content-Encoding: " +
+      type +
+      zeros(1) +
+      "P-256" +
+      context
+  end
+
+  def create_context(client_public_key, server_public_key)
     # The context format is:
     # 0x00 || length(clientPublicKey) || clientPublicKey ||
     #         length(serverPublicKey) || serverPublicKey
@@ -87,21 +128,25 @@ class GCMClient
       raise 'Invalid server public key length'
     end
 
-    # <<0,
-    #   byte_size(client_public_key) :: unsigned-big-integer-size(16)>> <>
-    #   client_public_key <>
-    # <<byte_size(server_public_key) :: unsigned-big-integer-size(16)>> <>
-    #   server_public_key
     context = zeros(1) +
-      client_public_key.length.to_s +
+      client_public_key.bytesize.to_s +
       client_public_key +
-      server_public_key.length.to_s +
+      server_public_key.bytesize.to_s +
       server_public_key
 
     context.force_encoding("ASCII-8BIT")
   end
 
-  # HMAC-based Key Derivation Function
+  # HMAC-based Extract-and-Expand Key Derivation Function (HKDF)
+  #
+  # This is used to derive a secure encryption key from a mostly-secure shared
+  # secret.
+  #
+  # This is a partial implementation of HKDF tailored to our specific purposes.
+  # In particular, for us the value of N will always be 1, and thus T always
+  # equals HMAC-Hash(PRK, info | 0x01).
+  #
+  # @link https://www.rfc-editor.org/rfc/rfc5869.txt
   def hkdf(salt, initial_key_material, info, length)
     digest = OpenSSL::Digest.new("sha256")
     hmac = OpenSSL::HMAC.new(salt, digest)
@@ -145,14 +190,14 @@ class GCMClient
   end
 
   def validate_subscription(subscription)
-    if !subscription.dig(:keys, :p256h) || !subscription.dig(:keys, :auth)
+    if !subscription.dig(:keys, :p256dh) || !subscription.dig(:keys, :auth)
       raise "Subscription is missing encryption details."
     end
   end
 
   # The padding value is a 16-bit big-endian integer specifying the padding length followed by that number of NUL bytes of padding.
   def make_padding(padding_length)
-    binary_length = padding_length.b
+    binary_length = padding_length.to_s.b
     binary_length + zeros(padding_length)
     # binary_length = <<padding_length :: unsigned-big-integer-size(16)>>
     # binary_length <> :binary.copy(<<0>>, padding_length)
