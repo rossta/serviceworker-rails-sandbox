@@ -1,12 +1,83 @@
 # encoding: binary
 #
 class GCMClient
-  ONE_BUFFER = "1".b
+  ONE_BUFFER = "1"
   AUTH_INFO = "Content-Encoding: auth" + '\0'
   MAX_PAYLOAD_LENGTH = 4078;
 
   def initialize(gcm_api_key=nil)
     @gcm_api_key = gcm_api_key || ENV.fetch('GOOGLE_CLOUD_MESSAGE_API_KEY', nil)
+  end
+
+  def client
+    @client ||= GCM.new(@gcm_api_key)
+  end
+
+  def send_notification(message, params)
+    Webpush.payload_send \
+      message: message,
+      endpoint: params[:endpoint],
+      p256dh: params.dig(:keys, :p256dh),
+      auth: params.dig(:keys, :auth),
+      api_key: @gcm_api_key
+  end
+
+  def test
+    params = {
+      "subscription" => {
+        "endpoint"=>"https://android.googleapis.com/gcm/send/ezSwIS32pNs:APA91bH_fGxTJxelMdc6qq9fb7hF2dP3UVLepGa9OxmdJT-NMPnVutNTGC1K5f8Sojbi1uJ7aMVBY-c03-K80St3UZCyEYj4sCzcgZl1sBTrL9AoHUwOcGiEk0UXOGYwyBnGtWfUOrn_",
+        "keys" => {
+          "p256dh" =>"BJcJUrIFLZacuKjs3DHcTDlLiPU3cVcFvX-7xmN-HdLSdKVWfaYcY4gF-LH2xfIK9-Vkylu-Wdz41VMT_sVaDkQ=",
+          "auth"=>"1k-EYugNcj_j8hVu-Wio9g=="}}, "type"=>"google"}.with_indifferent_access
+    # payload = encrypt("Happy Mother's Day", params[:subscription])
+    # payload = encrypt_2("Happy Mother's Day", params[:subscription])
+    payload = encrypt_3("Happy Mother's Day", params[:subscription])
+    payload.map { |k, v| [k, encode(v)] }.to_h
+  end
+
+  def encode(string)
+    Base64.urlsafe_encode64(string)
+  end
+
+  def decode(string)
+    Base64.urlsafe_decode64(string)
+  end
+
+  def encrypt_3(message, subscription, padding_length = 0)
+    client_public_key = subscription.dig(:keys, :p256dh).gsub(/_|\-/, "_" => "/", "-" => "+")
+    client_auth_token = subscription.dig(:keys, :auth).gsub(/_|\-/, "_" => "/", "-" => "+")
+    Webpush.send(:encrypt, message, client_public_key, client_auth_token)
+  end
+
+  def encrypt_2(message, subscription, padding_length = 0)
+    client_public_key = Base64.urlsafe_decode64(subscription.dig(:keys, :p256dh))
+    client_auth_token = Base64.urlsafe_decode64(subscription.dig(:keys, :auth))
+
+    salt = SecureRandom.random_bytes(16)
+
+    server_ecdh = generate_key_ecdh
+    client_public_key_point = to_key_point(client_public_key)
+    key = server_ecdh.dh_compute_key(client_public_key_point)
+
+    client_public_key = Base64.urlsafe_decode64(subscription.dig(:keys, :p256dh))
+    server_public_key = server_ecdh.public_key.to_bn.to_s(2)
+
+    cipher_text = ECE.encrypt(message,
+                user_public_key: client_public_key,
+                server_public_key: server_public_key,
+                key: key,
+                auth: client_auth_token,
+                salt: salt)
+
+    {
+      cipher_text: cipher_text,
+      salt: salt,
+      server_public_key: server_public_key,
+
+      server_private_key: server_ecdh.private_key.to_s(2),
+      client_public_key: client_public_key,
+      client_auth_token: client_auth_token
+    }
   end
 
   def encrypt(message, subscription, padding_length = 0)
@@ -35,7 +106,7 @@ class GCMClient
 
     context = create_context(client_public_key, server_public_key)
 
-    content_encryption_key_info = create_info("aesgcm", context)
+    content_encryption_key_info = create_info("aesgcm", context) # correct!
 
     content_encryption_key = hkdf(salt, prk, content_encryption_key_info, 16);
 
@@ -47,7 +118,17 @@ class GCMClient
     {
       cipher_text: cipher_text,
       salt: salt,
-      server_public_key: server_public_key
+      server_public_key: server_public_key,
+
+        server_private_key: server_ecdh.private_key.to_s(2),
+        shared_secret: shared_secret,
+        prk: prk,
+        content_encryption_key: content_encryption_key,
+        content_encryption_key_info: content_encryption_key_info,
+        nonce: nonce,
+        nonce_info: nonce_info,
+        client_public_key: client_public_key,
+        client_auth_token: client_auth_token
     }
     # OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new("sha256"), secret_key, string)
 
@@ -89,8 +170,8 @@ class GCMClient
     cipher.key = content_encryption_key
     cipher.iv = nonce
     cipher_text = cipher.update(plaintext)
-    cipher.final
-    cipher_text + cipher.auth_tag
+
+    cipher_text + cipher.final + cipher.auth_tag
 
     # {cipher_text, cipher_tag} = :crypto.block_encrypt(:aes_gcm, content_encryption_key, nonce, {"", plaintext})
     # cipher_text <> cipher_tag
@@ -129,12 +210,16 @@ class GCMClient
     end
 
     context = zeros(1) +
-      client_public_key.bytesize.to_s +
+      [client_public_key.bytesize].pack('n') +
       client_public_key +
-      server_public_key.bytesize.to_s +
+      [server_public_key.bytesize].pack('n') +
       server_public_key
 
     context.force_encoding("ASCII-8BIT")
+  end
+
+  def hkdf(salt, ikm, info, length)
+    HKDF.new(ikm, salt: salt, info: info).next_bytes(length)
   end
 
   # HMAC-based Extract-and-Expand Key Derivation Function (HKDF)
@@ -147,16 +232,17 @@ class GCMClient
   # equals HMAC-Hash(PRK, info | 0x01).
   #
   # @link https://www.rfc-editor.org/rfc/rfc5869.txt
-  def hkdf(salt, initial_key_material, info, length)
+  def hkdf2(salt, initial_key_material, info, length)
     digest = OpenSSL::Digest.new("sha256")
     hmac = OpenSSL::HMAC.new(salt, digest)
     hmac << initial_key_material
     prk = hmac.digest
 
+    digest = OpenSSL::Digest.new("sha256")
     infohmac = OpenSSL::HMAC.new(prk, digest)
-    infohmac << AUTH_INFO
+    infohmac << info
     infohmac << ONE_BUFFER
-    infohmac.digest.byteslice(0, length)
+    infohmac.digest.slice(0, length)
   end
 
   def generate_key_ecdh

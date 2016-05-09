@@ -93,6 +93,8 @@ GEM
       json
       thread
       thread_safe
+    ece (0.2.1)
+      hkdf
     equalizer (0.0.10)
     erubis (2.7.0)
     execjs (2.6.0)
@@ -137,6 +139,7 @@ GEM
     hashdiff (0.3.0)
     high_voltage (3.0.0)
     highline (1.7.8)
+    hkdf (0.2.0)
     http (1.0.2)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
@@ -359,6 +362,8 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
+    webpush (0.1.5)
+      hkdf (~> 0.2)
     websocket-driver (0.6.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -376,6 +381,7 @@ DEPENDENCIES
   capybara
   database_cleaner
   dotenv-rails
+  ece
   factory_girl_rails
   faker
   flutie
@@ -419,6 +425,7 @@ DEPENDENCIES
   vcr
   web-console (~> 2.0)
   webmock
+  webpush
 
 BUNDLED WITH
    1.11.2

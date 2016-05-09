@@ -4,13 +4,21 @@ const logger = new Logger('[push-simple/client]');
 let isPushEnabled = false;
 
 window.addEventListener("load", function onLoad() {
-  getPushButton().addEventListener('change', function onClick() {
+  getPushToggle().addEventListener('change', function onClick() {
     if (isPushEnabled) {
       unsubscribe();
     } else {
       subscribe();
     }
-  })
+  });
+
+  getSendPushButton().addEventListener('click', function onClick() {
+    if (isPushEnabled) {
+      sendNotification();
+    } else {
+      alert("Cannot send notification while push messages are disabled");
+    }
+  });
 });
 
 if (navigator.serviceWorker) {
@@ -19,6 +27,18 @@ if (navigator.serviceWorker) {
   .then(initializeState);
 } else {
   logger.warn('Service workers are not supported in your browser');
+}
+
+function sendNotification() {
+  fetch("/push", {
+    headers: formHeaders(),
+    method: 'POST',
+    credentials: 'include'
+  })
+    .catch((e) => {
+      logger.error("Could not save subscription", e);
+    });
+
 }
 
 function initializeState() {
@@ -41,11 +61,11 @@ function initializeState() {
     logger.log('Initializing push button state');
     serviceWorkerRegistration.pushManager.getSubscription()
     .then((subscription) => {
-      let pushButton = document.querySelector('.js-push-button');
+      let pushToggle = document.querySelector('.js-push-toggle');
 
       if (!subscription) {
         logger.log('You are not currently subscribed to push notifications');
-        pushButtonUnsubscribed();
+        pushToggleUnsubscribed();
         return;
       }
 
@@ -54,7 +74,7 @@ function initializeState() {
       // send a push message at a later date
       sendSubscriptionToServer(subscription);
       logger.log('You are currently subscribed to push notifications', subscription);
-      pushButtonSubscribed();
+      pushToggleSubscribed();
     })
     .catch((error) => {
       logger.warn('Error during getSubscription()', error);
@@ -64,14 +84,14 @@ function initializeState() {
 }
 
 function subscribe() {
-  disablePushButton();
+  disablePushToggle();
 
   navigator.serviceWorker.ready.then((serviceWorkerRegistration) => {
 
     serviceWorkerRegistration.pushManager
     .subscribe({userVisibleOnly: true})
     .then((subscription) => {
-      pushButtonSubscribed();
+      pushToggleSubscribed();
 
       logger.log('Permission to send notifications granted', subscription, JSON.stringify(subscription));
       // TODO
@@ -82,83 +102,87 @@ function subscribe() {
     .catch((e) => {
       if (Notification.permission === 'denied') {
         logger.warn('Permission to send notifications denied');
-        disablePushButton();
+        disablePushToggle();
       } else {
         logger.error('Unable to subscribe to push', e);
-        pushButtonUnsubscribed();
+        pushToggleUnsubscribed();
       }
     })
   })
 }
 
 function unsubscribe() {
-  let pushButton = document.querySelector('.js-push-button');
-  let pushButtonLabel = document.querySelector('.js-push-button-label');
-  pushButton.disabled = true;
+  let pushToggle = document.querySelector('.js-push-toggle');
+  let pushToggleLabel = document.querySelector('.js-push-toggle-label');
+  pushToggle.disabled = true;
 
   navigator.serviceWorker.ready
-  .then((serviceWorkerRegistration) => {
-    serviceWorkerRegistration.pushManager.getSubscription()
-    .then((subscription) => {
-      if (!subscription) {
-        return pushButtonUnsubscribed();
-      }
+    .then((serviceWorkerRegistration) => {
+      serviceWorkerRegistration.pushManager.getSubscription()
+      .then((subscription) => {
+        if (!subscription) {
+          return pushToggleUnsubscribed();
+        }
 
-      logger.log('Unsubscribing from push notifications', subscription);
+        logger.log('Unsubscribing from push notifications', subscription);
 
-      let subscriptionId = subscription.subscriptionId;
-      // TODO
-      // Remove subscriptionId from backend
+        let subscriptionId = subscription.subscriptionId;
+        // TODO
+        // Remove subscriptionId from backend
 
-      subscription.unsubscribe()
-      .then(pushButtonUnsubscribed)
-      .catch((e) => {
-        logger.error('Error thrown while unsubscribing from push messaging', e);
+        subscription.unsubscribe()
+        .then(pushToggleUnsubscribed)
+        .catch((e) => {
+          logger.error('Error thrown while unsubscribing from push messaging', e);
+        })
       })
-    })
-  })
+    });
 }
 
-function pushButtonUnsubscribed() {
+function pushToggleUnsubscribed() {
   isPushEnabled = false;
   setPushLabel('Enable push messages');
-  enablePushButton();
-  uncheckPushButton();
+  enablePushToggle();
+  uncheckPushToggle();
 }
 
-function pushButtonSubscribed() {
+function pushToggleSubscribed() {
   isPushEnabled = true;
   setPushLabel('Disable push messages');
-  enablePushButton();
-  checkPushButton();
+  enablePushToggle();
+  checkPushToggle();
 }
 
-function enablePushButton() {
-  getPushButton().disabled = false;
+function enablePushToggle() {
+  getPushToggle().disabled = false;
 }
 
-function checkPushButton() {
-  let pushButton = getPushButton();
-  if (pushButton.checked) return;
-  pushButton.checked = true;
+function checkPushToggle() {
+  let pushToggle = getPushToggle();
+  if (pushToggle.checked) return;
+  pushToggle.checked = true;
 }
 
-function uncheckPushButton() {
-  let pushButton = getPushButton();
-  if (!pushButton.checked) return;
-  pushButton.checked = false;
+function uncheckPushToggle() {
+  let pushToggle = getPushToggle();
+  if (!pushToggle.checked) return;
+  pushToggle.checked = false;
 }
 
-function disablePushButton() {
-  getPushButton().disabled = true;
+function disablePushToggle() {
+  getPushToggle().disabled = true;
 }
 
-function getPushButton() {
-  return document.querySelector('.js-push-button');
+function getSendPushButton() {
+  return document.querySelector('.js-send-push-button');
+}
+
+function getPushToggle() {
+  return document.querySelector('.js-push-toggle');
 }
 
 function setPushLabel(text) {
-  return document.querySelector('.js-push-button-label').textContent = text;
+  return document.querySelector('.js-push-toggle-label').textContent = text;
 }
 
 function sendSubscriptionToServer(subscription) {
@@ -186,6 +210,7 @@ function formHeaders() {
     'X-CSRF-Token': authenticityToken(),
   });
 }
+
 function authenticityToken() {
   return document.querySelector('meta[name=csrf-token]').content;
 }
