@@ -14,6 +14,8 @@ class GCMClient
   end
 
   def send_notification(message, params)
+    api_key = ''
+    api_key = @gcm_api_key if params[:endpoint] =~ /google.com/
     Webpush.payload_send \
       message: message,
       endpoint: params[:endpoint],
