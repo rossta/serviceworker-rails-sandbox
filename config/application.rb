@@ -36,9 +36,6 @@ module ServiceworkerRailsSandbox
     # Set ActiveJob queue adapter
     config.active_job.queue_adapter = :sucker_punch
 
-    # Use ES2015 in asset pipeline
-    config.browserify_rails.commandline_options = "-t babelify"
-
     # Custom settings
     config.settings = ActiveSupport::OrderedOptions.new
     config.settings.google_analytics_tracking_id = 'UA-xxxxxxxx-x'

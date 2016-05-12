@@ -78,4 +78,6 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.settings.google_analytics_tracking_id = 'UA-31058047-2'
+
+  config.react.variant = :production
 end
