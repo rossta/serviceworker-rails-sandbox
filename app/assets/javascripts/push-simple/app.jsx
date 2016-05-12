@@ -75,37 +75,40 @@ const PushControls = React.createClass({
 
     self.disable();
 
-    if (!ServiceWorkerRegistration.prototype.showNotification) {
-      logger.warn('Notifications are not supported in your browser');
-      return;
-    }
+    // this.props.setup(onSuccess, onError);
+    this.props.setup(this.onSubscribed, this.onUnsubscribed);
 
-    if (Notification.permissions === 'denied') {
-      logger.warn('You have blocked notifications');
-      return;
-    }
-
-    if (!window.PushManager) {
-      logger.warn('Push messaging is not supported in your browser');
-    }
-
-    navigator.serviceWorker.ready
-      .then((serviceWorkerRegistration) => {
-        logger.log('Initializing push button state');
-        serviceWorkerRegistration.pushManager.getSubscription()
-          .then((subscription) => {
-            if (!subscription) {
-              logger.log('You are not currently subscribed to push notifications');
-              self.onUnsubscribed();
-              return;
-            }
-
-            self.onSubscribed();
-          })
-          .catch((error) => {
-            logger.warn('Error during getSubscription()', error);
-          });
-      });
+    // if (!ServiceWorkerRegistration.prototype.showNotification) {
+    //   logger.warn('Notifications are not supported in your browser');
+    //   return;
+    // }
+    //
+    // if (Notification.permissions === 'denied') {
+    //   logger.warn('You have blocked notifications');
+    //   return;
+    // }
+    //
+    // if (!window.PushManager) {
+    //   logger.warn('Push messaging is not supported in your browser');
+    // }
+    //
+    // navigator.serviceWorker.ready
+    //   .then((serviceWorkerRegistration) => {
+    //     logger.log('Initializing push button state');
+    //     serviceWorkerRegistration.pushManager.getSubscription()
+    //       .then((subscription) => {
+    //         if (!subscription) {
+    //           logger.log('You are not currently subscribed to push notifications');
+    //           self.onUnsubscribed();
+    //           return;
+    //         }
+    //
+    //         self.onSubscribed();
+    //       })
+    //       .catch((error) => {
+    //         logger.warn('Error during getSubscription()', error);
+    //       });
+    //   });
   },
 
   onChange() {
@@ -125,55 +128,59 @@ const PushControls = React.createClass({
   },
 
   subscribe() {
-    const self = this;
-    self.setState({ isEnabled: false });
-    navigator.serviceWorker.ready.then((serviceWorkerRegistration) => {
-      serviceWorkerRegistration.pushManager
-        .subscribe({userVisibleOnly: true})
-        .then((subscription) => {
-          self.onSubscribed(subscription);
-        })
-        .catch((e) => {
-          if (Notification.permission === 'denied') {
-            logger.warn('Permission to send notifications denied');
-          } else {
-            logger.error('Unable to subscribe to push', e);
-          }
-          onUnsubscribed();
-        })
-    });
+    this.disable();
+
+    this.props.subscribe(this.onSubscribed, this.onUnsubscribed);
+
+    // navigator.serviceWorker.ready.then((serviceWorkerRegistration) => {
+    //   serviceWorkerRegistration.pushManager
+    //     .subscribe({userVisibleOnly: true})
+    //     .then((subscription) => {
+    //       self.onSubscribed(subscription);
+    //     })
+    //     .catch((e) => {
+    //       if (Notification.permission === 'denied') {
+    //         logger.warn('Permission to send notifications denied');
+    //       } else {
+    //         logger.error('Unable to subscribe to push', e);
+    //       }
+    //       onUnsubscribed();
+    //     })
+    // });
   },
 
   onSubscribed(subscription) {
     this.setState({ isEnabled: false, isSubscribed: true });
-    return sendSubscriptionToServer(subscription).then(() => this.enable());
+    return this.props.serverSubscribe(subscription).then(this.enable);
   },
 
   unsubscribe() {
-    const self = this;
-    self.setState({ isEnabled: false });
-    navigator.serviceWorker.ready
-      .then((serviceWorkerRegistration) => {
-        serviceWorkerRegistration.pushManager.getSubscription()
-        .then((subscription) => {
-          if (!subscription) {
-            return self.onUnsubscribed();
-          }
-
-          logger.log('Unsubscribing from push notifications', subscription.toJSON());
-
-          subscription.unsubscribe()
-          .then(() => self.onUnsubscribed())
-          .catch((e) => {
-            logger.error('Error thrown while unsubscribing from push messaging', e);
-          })
-      })
-      });
+    this.disable();
+    this.props.unsubscribe(this.onUnsubscribed);
+    // const self = this;
+    // self.setState({ isEnabled: false });
+    // navigator.serviceWorker.ready
+    //   .then((serviceWorkerRegistration) => {
+    //     serviceWorkerRegistration.pushManager.getSubscription()
+    //     .then((subscription) => {
+    //       if (!subscription) {
+    //         return self.onUnsubscribed();
+    //       }
+    //
+    //       logger.log('Unsubscribing from push notifications', subscription.toJSON());
+    //
+    //       subscription.unsubscribe()
+    //       .then(() => self.onUnsubscribed())
+    //       .catch((e) => {
+    //         logger.error('Error thrown while unsubscribing from push messaging', e);
+    //       })
+    //   })
+    //   });
   },
 
   onUnsubscribed() {
     this.setState({ isEnabled: false, isSubscribed: false });
-    unsubscribeOnServer().then(() => this.enable());
+    this.props.serverUnsubscribe().then(this.enable);
   },
 
   enable() {
@@ -248,9 +255,9 @@ function sendNotification() {
 
 }
 
-export default function() {
+export default function(props) {
   ReactDOM.render(
-    <PushControls />,
+    <PushControls {...props} />,
     document.getElementById('push-simple-app')
   );
 }
