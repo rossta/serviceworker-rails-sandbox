@@ -369,7 +369,7 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
-    webpush (0.1.5)
+    webpush (0.1.6)
       hkdf (~> 0.2)
     websocket-driver (0.6.3)
       websocket-extensions (>= 0.1.0)
