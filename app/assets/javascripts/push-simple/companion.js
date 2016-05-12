@@ -69,12 +69,8 @@ function initializeState() {
         return;
       }
 
-      // TODO
-      // Send subscription.endpoint to server and save in data store to
-      // send a push message at a later date
-      sendSubscriptionToServer(subscription);
-      logger.log('You are currently subscribed to push notifications', subscription);
-      pushToggleSubscribed();
+      sendSubscriptionToServer(subscription)
+        .then(pushToggleSubscribed)
     })
     .catch((error) => {
       logger.warn('Error during getSubscription()', error);
@@ -93,7 +89,7 @@ function subscribe() {
     .then((subscription) => {
       pushToggleSubscribed();
 
-      logger.log('Permission to send notifications granted', subscription, JSON.stringify(subscription));
+      logger.log('Permission to send notifications granted', subscription.toJSON());
       // TODO
       // Send subscription.endpoint to server and save in data store to
       // send a push message at a later date
@@ -124,17 +120,13 @@ function unsubscribe() {
           return pushToggleUnsubscribed();
         }
 
-        logger.log('Unsubscribing from push notifications', subscription);
-
-        let subscriptionId = subscription.subscriptionId;
-        // TODO
-        // Remove subscriptionId from backend
+        logger.log('Unsubscribing from push notifications', subscription.toJSON());
 
         subscription.unsubscribe()
-        .then(pushToggleUnsubscribed)
-        .catch((e) => {
-          logger.error('Error thrown while unsubscribing from push messaging', e);
-        })
+          .then(pushToggleUnsubscribed)
+          .catch((e) => {
+            logger.error('Error thrown while unsubscribing from push messaging', e);
+          })
       })
     });
 }
@@ -192,7 +184,7 @@ function sendSubscriptionToServer(subscription) {
     type: "google"
   });
 
-  fetch("/subscribe", {
+  return fetch("/subscribe", {
     headers: formHeaders(),
     method: 'POST',
     credentials: 'include',

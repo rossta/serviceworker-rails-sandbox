@@ -20,9 +20,9 @@ gem "high_voltage"
 gem "i18n-tasks"
 
 gem "twitter"
-gem "gcm"
 gem "ece"
 gem "webpush"
+gem "sucker_punch"
 
 gem "non-stupid-digest-assets"
 gem "serviceworker-rails", path: "vendor/gems/serviceworker-rails"

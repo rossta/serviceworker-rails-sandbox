@@ -33,6 +33,9 @@ module ServiceworkerRailsSandbox
     # Ensure trailing slash to provide service worker scopes at path roots
     config.action_controller.default_url_options = { trailing_slash: true }
 
+    # Set ActiveJob queue adapter
+    config.active_job.queue_adapter = :sucker_punch
+
     # Use ES2015 in asset pipeline
     config.browserify_rails.commandline_options = "-t babelify"
 

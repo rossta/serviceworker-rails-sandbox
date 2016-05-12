@@ -114,9 +114,6 @@ GEM
       activesupport
       capybara
       i18n
-    gcm (0.1.1)
-      httparty
-      json
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     guard (2.13.0)
@@ -149,9 +146,6 @@ GEM
       domain_name (~> 0.5)
     http-form_data (1.0.1)
     http_parser.rb (0.6.0)
-    httparty (0.13.7)
-      json (~> 1.8)
-      multi_xml (>= 0.5.2)
     i18n (0.7.0)
     i18n-tasks (0.9.5)
       activesupport (>= 4.0.2)
@@ -188,7 +182,6 @@ GEM
     mini_portile2 (2.0.0)
     minitest (5.8.4)
     multi_json (1.11.3)
-    multi_xml (0.5.5)
     multipart-post (2.0.0)
     naught (1.1.0)
     nenv (0.3.0)
@@ -319,6 +312,8 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    sucker_punch (2.0.2)
+      concurrent-ruby (~> 1.0.0)
     term-ansicolor (1.3.2)
       tins (~> 1.0)
     terminal-table (1.5.2)
@@ -386,7 +381,6 @@ DEPENDENCIES
   faker
   flutie
   formulaic
-  gcm
   guard-bundler
   guard-rails
   high_voltage
@@ -417,6 +411,7 @@ DEPENDENCIES
   serviceworker-rails!
   shoulda-matchers
   spring
+  sucker_punch
   timecop
   title
   turbolinks

@@ -1,8 +1,7 @@
 require "rails_helper"
 
 describe TwitterClient do
-  let(:account) { double(token: token, secret: secret) }
-  let(:client) { TwitterClient.new(account) }
+  let(:client) { TwitterClient.new }
 
   def token
     ENV.fetch('TWITTER_ACCESS_TOKEN')
