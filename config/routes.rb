@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :streams
 
   post "/subscribe" => "subscriptions#create"
+  delete "/unsubscribe" => "subscriptions#destroy"
   post "/push" => "push_notifications#create"
 
   get "/*path/offline" => "welcome#offline"
