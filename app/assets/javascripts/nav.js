@@ -79,5 +79,5 @@ require('skel-framework/dist/skel.min.js');
   }
 
   $(document).ready(ready);
-  $(document).on('page:load', ready);
+  $(document).on('page:load.nav', ready);
 })();

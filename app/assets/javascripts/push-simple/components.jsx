@@ -136,10 +136,18 @@ const PushControls = React.createClass({
 });
 
 function render(props) {
-  ReactDOM.render(
-    <PushControls {...props} />,
-    document.getElementById('push-simple-app')
-  );
+  const root = document.getElementById('push-simple-app');
+
+  if (root) {
+    ReactDOM.render(<PushControls {...props} />, root);
+  }
 }
 
-export { render };
+function dismount() {
+  const root = document.getElementById('push-simple-app');
+  if (root) {
+    ReactDOM.unmountComponentAtNode(root);
+  }
+}
+
+export { render, dismount };

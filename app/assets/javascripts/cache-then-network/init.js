@@ -14,7 +14,7 @@ const state = {
   force: false
 };
 
-export default function ready() {
+function ready() {
   fetchData();
   $(target).on('click', '.delete-cache', deleteCache);
   $(target).on('click', '.refresh', refresh);
@@ -74,5 +74,4 @@ function refresh(e) {
   location.reload();
 }
 
-$(document).ready(ready);
-$(document).on('page:load', ready);
+export { ready };

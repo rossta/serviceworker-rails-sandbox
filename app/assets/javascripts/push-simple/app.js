@@ -1,4 +1,4 @@
-import { render } from 'push-simple/components';
+import { render, dismount } from 'push-simple/components';
 import Logger from 'utils/logger';
 const logger = new Logger('[push-simple/app]');
 
@@ -8,7 +8,7 @@ function setup(onSubscribed, onUnsubscribed) {
     return;
   }
 
-  if (Notification.permissions === 'denied') {
+  if (Notification.permission === 'denied') {
     logger.warn('You have blocked notifications');
     return;
   }
@@ -124,7 +124,7 @@ function authenticityToken() {
   return document.querySelector('meta[name=csrf-token]').content;
 }
 
-function onLoad() {
+function ready() {
   return render({
     setup,
     subscribe,
@@ -135,4 +135,4 @@ function onLoad() {
   })
 }
 
-export { onLoad };
+export { ready, dismount };
