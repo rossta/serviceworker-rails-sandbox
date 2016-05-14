@@ -61,6 +61,8 @@ function unsubscribe(onUnsubscribed) {
             return onUnsubscribed();
           }
 
+          logger.log('Unsubscribing from push notifications', subscription.toJSON());
+
           subscription.unsubscribe()
           .then(onUnsubscribed)
           .catch((e) => {
