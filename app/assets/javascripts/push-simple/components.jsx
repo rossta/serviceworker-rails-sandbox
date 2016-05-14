@@ -101,6 +101,7 @@ const PushControls = React.createClass({
   },
 
   onSubscribed(subscription) {
+    logger.log('Subscribing to push notifications', subscription.toJSON());
     this.setState({ isEnabled: false, isSubscribed: true });
     return this.props.serverSubscribe(subscription).then(this.enable);
   },
