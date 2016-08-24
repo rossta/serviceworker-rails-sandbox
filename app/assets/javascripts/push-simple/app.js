@@ -53,9 +53,9 @@ function subscribe(onSubscribed, onUnsubscribed) {
 }
 
 function unsubscribe(onUnsubscribed) {
-    navigator.serviceWorker.ready
-      .then((serviceWorkerRegistration) => {
-        serviceWorkerRegistration.pushManager.getSubscription()
+  navigator.serviceWorker.ready
+    .then((serviceWorkerRegistration) => {
+      serviceWorkerRegistration.pushManager.getSubscription()
         .then((subscription) => {
           if (!subscription) {
             return onUnsubscribed();
@@ -64,12 +64,12 @@ function unsubscribe(onUnsubscribed) {
           logger.log('Unsubscribing from push notifications', subscription.toJSON());
 
           subscription.unsubscribe()
-          .then(onUnsubscribed)
-          .catch((e) => {
-            logger.error('Error thrown while unsubscribing from push messaging', e);
-          })
-      })
-      });
+            .then(onUnsubscribed)
+            .catch((e) => {
+              logger.error('Error thrown while unsubscribing from push messaging', e);
+            });
+        });
+    });
 }
 
 function serverSubscribe(subscription) {
