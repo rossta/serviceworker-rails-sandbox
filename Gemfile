@@ -44,7 +44,6 @@ group :development do
   gem "better_errors"
   gem "guard-bundler"
   gem "guard-rails"
-  # gem "quiet_assets"
   gem "rails_layout"
   gem "rb-fchange", require: false
   gem "rb-fsevent", require: false
