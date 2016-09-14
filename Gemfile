@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby "2.3.1"
 
-gem "rails", "4.2.6"
+gem "rails", "~> 5.0.0"
 gem "pg", "~> 0.15"
 gem "puma"
 
@@ -44,7 +44,6 @@ group :development do
   gem "better_errors"
   gem "guard-bundler"
   gem "guard-rails"
-  gem "quiet_assets"
   gem "rails_layout"
   gem "rb-fchange", require: false
   gem "rb-fsevent", require: false

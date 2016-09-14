@@ -1,4 +1,4 @@
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 
 require 'rails/all'
 
@@ -13,7 +13,7 @@ module ServiceworkerRailsSandbox
     # in the foreground.
     config.log_level = :debug
     config.log_tags  = [:subdomain, :uuid]
-    config.logger    = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+    config.logger    = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
