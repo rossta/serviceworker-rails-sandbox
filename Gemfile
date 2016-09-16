@@ -27,7 +27,7 @@ gem "webpush"
 gem "sucker_punch"
 
 gem "non-stupid-digest-assets"
-gem "serviceworker-rails", path: "vendor/gems/serviceworker-rails"
+gem "serviceworker-rails", github: "rossta/serviceworker-rails", branch: "master"
 
 group :development, :test do
   gem "factory_girl_rails"

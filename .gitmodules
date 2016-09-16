@@ -1,3 +1,0 @@
-[submodule "vendor/gems/serviceworker-rails"]
-	path = vendor/gems/serviceworker-rails
-	url = https://github.com/rossta/serviceworker-rails.git
