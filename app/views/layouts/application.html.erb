@@ -7,6 +7,8 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
     <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon"                 href="<%= image_path("circle-turtle-192x192.png") %>" />
+    <link rel="icon"             sizes="192x192" href="<%= image_path("circle-turtle-192x192.png") %>" />
     <%= yield :head %>
   </head>
   <body>
