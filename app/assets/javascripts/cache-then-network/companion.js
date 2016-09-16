@@ -1,4 +1,5 @@
 import Logger from 'utils/logger';
+import {alertSWSupport} from 'utils/alertOnce';
 const logger = new Logger('[cache-then-network/client]');
 
 function ready() {
@@ -10,7 +11,7 @@ function ready() {
         logger.log('Service worker change, registered the service worker');
       });
   } else {
-    logger.error('Service worker not supported in this browser');
+    alertSWSupport();
   }
 }
 

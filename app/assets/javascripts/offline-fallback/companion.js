@@ -1,4 +1,5 @@
 import Logger from 'utils/logger';
+import {alertSWSupport} from 'utils/alertOnce';
 const logger = new Logger('[offline-fallback/client]');
 
 if (navigator.serviceWorker) {
@@ -8,4 +9,6 @@ if (navigator.serviceWorker) {
       logger.log(reg.scope, 'register');
       logger.log('Service worker change, registered the service worker');
     });
+} else {
+  alertSWSupport();
 }
