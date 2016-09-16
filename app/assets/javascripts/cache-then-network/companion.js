@@ -1,5 +1,5 @@
 import Logger from 'utils/logger';
-import {alertSWSupport} from 'utils/alertOnce';
+import {alertSWSupport} from 'utils/alertonce';
 const logger = new Logger('[cache-then-network/client]');
 
 function ready() {
