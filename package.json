@@ -3,11 +3,8 @@
   "version": "1.0.0",
   "description": "A Service Worker sandbox for Rails apps",
   "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Skip\""
   },
   "author": "Ross Kaffenberger",
   "license": "MIT",
