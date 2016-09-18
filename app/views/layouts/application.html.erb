@@ -3,12 +3,13 @@
   <head>
     <title>Service Worker on Rails</title>
     <%= site_metatags %>
+
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
     <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon"                 href="<%= image_path("circle-turtle-192x192.png") %>" />
-    <link rel="icon"             sizes="192x192" href="<%= image_path("circle-turtle-192x192.png") %>" />
+    <link rel="apple-touch-icon"                 href="/touch-icon.png" />
+    <link rel="icon"             sizes="192x192" href="/touch-icon.png" />
     <%= yield :head %>
   </head>
   <body>
