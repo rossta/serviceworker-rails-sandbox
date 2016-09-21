@@ -105,9 +105,15 @@ function sendNotification() {
     headers: formHeaders(),
     method: 'POST',
     credentials: 'include'
+  }).then((response) => {
+    logger.log("Push response", response);
+    if (response.status >= 500) {
+      logger.error(response.statusText);
+      alert("Sorry, there was a problem sending the notification. Try resubscribing to push messages and resending.");
+    }
   })
   .catch((e) => {
-    logger.error("Could not save subscription", e);
+    logger.error("Error sending notification", e);
   });
 
 }

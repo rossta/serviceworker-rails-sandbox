@@ -18,13 +18,13 @@ class PushNotificationsController < ApplicationController
   end
 
   def fetch_subscription_params
-    params.fetch(:subscription, decode_subscription_session)
+    params.fetch(:subscription, extract_session_subscription)
   end
 
-  def decode_subscription_session
-    encoded_subscription = session.fetch(:subscription) { raise PushNotificationError,
+  def extract_session_subscription
+    subscription = session.fetch(:subscription) { raise PushNotificationError,
                                                           "Cannot create notification: no :subscription in params or session" }
 
-    JSON.parse(Base64.urlsafe_decode64(encoded_subscription)).with_indifferent_access
+    JSON.parse(subscription).with_indifferent_access
   end
 end
