@@ -7,6 +7,7 @@ class WebpushJob < ActiveJob::Base
     log("sending #{message} to #{params[:endpoint]}")
     sent = client.send_notification(message, params)
     log(sent ? "success" : "failed")
+    log(sent.inspect)
   end
 
   def log(message)
