@@ -6,6 +6,15 @@ GIT
     serviceworker-rails (0.3.1)
       railties (>= 3.1)
 
+GIT
+  remote: git://github.com/rossta/webpush.git
+  revision: 18fff9bbd19b6fde49af30c27531156079e91d8a
+  branch: master
+  specs:
+    webpush (0.2.5)
+      hkdf (~> 0.2)
+      jwt
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -172,6 +181,7 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (1.8.3)
+    jwt (1.5.6)
     launchy (2.4.3)
       addressable (~> 2.3)
     listen (3.1.5)
@@ -374,8 +384,6 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
-    webpush (0.2.3)
-      hkdf (~> 0.2)
     websocket-driver (0.6.4)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -438,7 +446,7 @@ DEPENDENCIES
   vcr
   web-console (~> 2.0)
   webmock
-  webpush
+  webpush!
 
 RUBY VERSION
    ruby 2.3.1p112

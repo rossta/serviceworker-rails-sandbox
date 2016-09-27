@@ -1,6 +1,6 @@
-import { render, dismount } from 'push-simple/components';
+import { render, dismount } from 'push-react/components';
 import Logger from 'utils/logger';
-const logger = new Logger('[push-simple/app]');
+const logger = new Logger('[push-react/app]');
 
 function setup(onSubscribed, onUnsubscribed) {
   if (!ServiceWorkerRegistration.prototype.showNotification) {

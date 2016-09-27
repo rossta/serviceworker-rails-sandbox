@@ -19,6 +19,7 @@
     "react-dom": "^15.0.2",
     "reactify": "^1.1.1",
     "skel": "0.0.0",
-    "skel-framework": "github:n33/skel"
+    "skel-framework": "github:n33/skel",
+    "web-push": "^3.0.0"
   }
 }

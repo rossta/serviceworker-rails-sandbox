@@ -1,4 +1,4 @@
-<h2>Push Simple</h2>
+<h2>Push React</h2>
 
   <p>
     <strong>Objective</strong>: Simple example of the Web Push API through Service Worker. Send notifications to users even when the page is not open.
@@ -11,4 +11,4 @@
 <script type="text/javascript">
   var publicKey = new Uint8Array(<%= Base64.urlsafe_decode64(WebpushClient::PUBLIC_KEY).bytes %>);
 </script>
-<%= javascript_include_tag 'push-simple' %>
+<%= javascript_include_tag 'push-react' %>

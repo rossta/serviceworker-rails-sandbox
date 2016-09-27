@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Logger from 'utils/logger';
-const logger = new Logger('[push-simple/app]');
+const logger = new Logger('[push-react/app]');
 
 const SendMessageButton = React.createClass({
   onClick(e) {
@@ -142,7 +142,7 @@ const PushControls = React.createClass({
 });
 
 function render(props) {
-  const root = document.getElementById('push-simple-app');
+  const root = document.getElementById('push-react-app');
 
   if (root) {
     ReactDOM.render(<PushControls {...props} />, root);
@@ -150,7 +150,7 @@ function render(props) {
 }
 
 function dismount() {
-  const root = document.getElementById('push-simple-app');
+  const root = document.getElementById('push-react-app');
   if (root) {
     ReactDOM.unmountComponentAtNode(root);
   }
