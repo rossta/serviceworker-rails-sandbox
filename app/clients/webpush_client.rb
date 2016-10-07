@@ -1,16 +1,18 @@
 class WebpushClient
-  PUBLIC_KEY = "BNcyGTkBni3_xKHBuTA0ldfgGdE_QaLLwOO9Vo20NngWnWYixbOP8irmfsQrmOmEQpOZt7Q0AtwnlOYE4BHeIgk"
-  PRIVATE_KEY = "y74a3L_5dWKvyOuM3k9Ai__7Ir0s49UFPrvwVgukyBA="
+  PUBLIC_KEY = "BB9KQDaypj3mJCyrFbF5EDm-UrfnIGeomy0kYL56Mddi3LG6AFEMB_DnWUXSAmNFNOaIgTlXrT3dk2krmp9SPyg="
+  PRIVATE_KEY ="JYQ5wbkNfJ2b1Kv_t58cUJJENBIIboVv5Ijzk6a5yH8="
 
   SUBSCRIPTION = {
-    endpoint:"https://fcm.googleapis.com/fcm/send/fDf_PbtYk70:APA91bHCU87CoC2eX1B-nneaEQ7DCZqGoTkIp6EDm5f979uEvPVa99TyTSstbsKYmjvp_hajtZvkxKUnavPzTgO6kBb242OUJj1hPWYYPVofxN6Z2tDi7A2eWEk4OdME2PHVK0HAji8J",
-    p256dh:"BKXmTRnY3iFBArC6WHVFhRqiyQWNI_9taE9AWU7f_JGWrE4lO4cw4Blx5ujt9WN6kUTZVEuntGWfE5QUThno-9k=",
-    auth:"RejvG7F4S4NJ3xOycwT3IA=="
+    :endpoint=>"https://fcm.googleapis.com/fcm/send/fdJm4S5rzj8:APA91bHdht6r-oXwx5EAlOIm3EFRMvSIEsQf8r79p9W6vVZ_5K9oMhEnrhahtazyTX2j7z1z30KOKCI8ATC3vuSKy_zrOmHU9zO8YwZFu4sNW6IhpHf_k6OTCrvzlwc8Q8_8hUpUU5gm",
+    :p256dh=>"BLqq8R2Ih0FRWLYLh4cvSYTdXlqUYibSJCWT5dkAWyPMaC_h11k0rS9QIyXIPa4xe7gDiFey4lol_H6zUJtwc90=",
+    :auth=>"Kj1Pj1HHHYC7OTDWOcjn5g=="
   }
 
-  def initialize(google_key: nil)
-    @google_key = google_key || ENV.fetch('GOOGLE_CLOUD_MESSAGE_API_KEY', nil)
-  end
+  FIREFOX = {
+    :endpoint => "https://updates.push.services.mozilla.com/wpush/v2/gAAAAABX9xnU2nIjElmHkBJmHpt9curGStrH1lt9pwPufsbJDsfZprpJ-rrWABFrzvNoN5E5_TsYwt27keblGUQqDccoiat-OOPryNO1kO1BXqZi0r9Ogf2cCg9q7XiyMCpHq949_OoOGW8vONE6eYbVJ-EyhKEuwCRTv5vAZgEPCNlsFQSg71c",
+    :auth => "GzdPDQvcdzj_S_GdVRsxuQ",
+    :p256dh => "BPcUY3mhrBkMsSjsZsRpfWVkfWTMydGeCfldRg_L5xCtNtdpVfmCWZQyTJ9ND3NCo_NK2E2KRGKMGPXOjFZGbDY"
+  }
 
   # Send webpush message using subscription parameters
   #
@@ -30,38 +32,28 @@ class WebpushClient
     Rails.logger.info("auth: #{auth}")
 
     Webpush.payload_send \
-      message: message,
+      message: nil,
       endpoint: endpoint,
       p256dh: p256dh,
       auth: auth,
       vapid: {
-        audience: "https://serviceworker.dev",
+        audience: "http://localhost:5000",
         subject: "mailto:ross@rossta.net",
         public_key: PUBLIC_KEY,
         private_key: PRIVATE_KEY
       }
-  end
 
-  def vapid_headers
-    Webpush::Encryption.vapid_headers(
-      audience: "https://serviceworker.dev",
-      subject: "mailto:ross@rossta.net",
-      public_key: PUBLIC_KEY,
-      private_key: PRIVATE_KEY,
-      expiration: 1475032046
-    )
+    # Webpush.new(subscription)
+    # webpush = WebPush.new(endpoint: endpoint, keys: { p256dh: p256dh, auth: auth })
+    # webpush.set_vapid_details(
+    #   "mailto:sender@example.com",
+    #   PUBLIC_KEY,
+    #   PRIVATE_KEY
+    # )
+    # webpush.send_notification(message)
   end
 
   def test_send
-    send_notification("You're a good person, Ross", WebpushClient::SUBSCRIPTION)
-  end
-
-  def api_key_for_host(endpoint)
-    case endpoint
-    when %r{https?://[^/]*google[^/]*/}
-      @google_key
-    else
-      ''
-    end
+    send_notification("You're a good person, Ross", WebpushClient::FIREFOX)
   end
 end

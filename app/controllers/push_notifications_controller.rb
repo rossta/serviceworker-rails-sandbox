@@ -14,7 +14,7 @@ class PushNotificationsController < ApplicationController
   private
 
   def fetch_message
-    params.fetch(:message, "Hello, World, the time is #{Time.zone.now}")
+    params.fetch(:message, "You're a good person, Ross")
   end
 
   def fetch_subscription_params
