@@ -4,8 +4,8 @@ class WebpushClient
 
   SUBSCRIPTION = {
     :endpoint=>"https://fcm.googleapis.com/fcm/send/fdJm4S5rzj8:APA91bHdht6r-oXwx5EAlOIm3EFRMvSIEsQf8r79p9W6vVZ_5K9oMhEnrhahtazyTX2j7z1z30KOKCI8ATC3vuSKy_zrOmHU9zO8YwZFu4sNW6IhpHf_k6OTCrvzlwc8Q8_8hUpUU5gm",
-    :p256dh=>"BLqq8R2Ih0FRWLYLh4cvSYTdXlqUYibSJCWT5dkAWyPMaC_h11k0rS9QIyXIPa4xe7gDiFey4lol_H6zUJtwc90=",
-    :auth=>"Kj1Pj1HHHYC7OTDWOcjn5g=="
+    :p256dh=>"BLhM3NTCXXt76nflRZCrx0DdiPTmtxLl0l-uXwSiFqdZTf5mAq8rt_VFRqutA8FwZsz5vBA-JpUZjgioehTlSdI=",
+    :auth=>"6qLda9rw3x8cG5uowvytDw=="
   }
 
   FIREFOX = {
@@ -37,7 +37,6 @@ class WebpushClient
       p256dh: p256dh,
       auth: auth,
       vapid: {
-        audience: "http://localhost:5000",
         subject: "mailto:ross@rossta.net",
         public_key: PUBLIC_KEY,
         private_key: PRIVATE_KEY
@@ -54,6 +53,6 @@ class WebpushClient
   end
 
   def test_send
-    send_notification("You're a good person, Ross", WebpushClient::FIREFOX)
+    send_notification("You're a good person, Ross", WebpushClient::SUBSCRIPTION)
   end
 end
