@@ -32,7 +32,7 @@ class WebpushClient
     Rails.logger.info("auth: #{auth}")
 
     Webpush.payload_send \
-      message: nil,
+      message: message,
       endpoint: endpoint,
       p256dh: p256dh,
       auth: auth,

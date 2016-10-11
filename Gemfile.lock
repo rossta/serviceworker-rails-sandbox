@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git://github.com/rossta/webpush.git
-  revision: 6375293dde03fd65b19b4046ba176f2a4d14cc88
+  revision: 2b9ceef9cbdc803a69df4b972da4daeac89f0618
   branch: vapid
   specs:
     webpush (0.2.5)

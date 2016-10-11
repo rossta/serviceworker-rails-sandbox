@@ -16,4 +16,9 @@ function onPush(event) {
   )
 }
 
+function onPushSubscriptionChange(event) {
+  logger.log("Push subscription change event detected", event);
+}
+
 self.addEventListener("push", onPush);
+self.addEventListener("pushsubscriptionchange", onPushSubscriptionChange);
