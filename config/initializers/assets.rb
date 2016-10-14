@@ -30,6 +30,8 @@ Rails.application.configure do
     push-simple/serviceworker.js
     push-simple.js
     push-simple/manifest.json
+    push-react.js
+    push-react/manifest.json
   )
 
   # Use ES2015 and react in asset pipeline

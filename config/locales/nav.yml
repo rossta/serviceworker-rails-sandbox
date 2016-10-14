@@ -6,3 +6,4 @@ en:
       - "Offline Fallback"
     push:
       - "Push Simple"
+      - "Push React"

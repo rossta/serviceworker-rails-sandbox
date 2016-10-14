@@ -1,6 +1,14 @@
 class WebpushClient
-  def initialize(google_key: nil)
-    @google_key = google_key || ENV.fetch('GOOGLE_CLOUD_MESSAGE_API_KEY', nil)
+  def self.public_key
+    ENV.fetch('VAPID_PUBLIC_KEY')
+  end
+
+  def self.public_key_bytes
+    Base64.urlsafe_decode64(public_key).bytes
+  end
+
+  def self.private_key
+    ENV.fetch('VAPID_PRIVATE_KEY')
   end
 
   # Send webpush message using subscription parameters
@@ -14,20 +22,29 @@ class WebpushClient
     raise ArgumentError, ":endpoint param is required" if endpoint.blank?
     raise ArgumentError, "subscription :keys are missing" if p256dh.blank? || auth.blank?
 
+    Rails.logger.info("Sending WebPush notification...............")
+    Rails.logger.info("message: #{message}")
+    Rails.logger.info("endpoint: #{endpoint}")
+    Rails.logger.info("p256dh: #{p256dh}")
+    Rails.logger.info("auth: #{auth}")
+
     Webpush.payload_send \
       message: message,
       endpoint: endpoint,
       p256dh: p256dh,
       auth: auth,
-      api_key: api_key_for_host(endpoint)
+      vapid: {
+        subject: "mailto:ross@rossta.net",
+        public_key: public_key,
+        private_key: private_key
+      }
   end
 
-  def api_key_for_host(endpoint)
-    case endpoint
-    when %r{https?://[^/]*google[^/]*/}
-      @google_key
-    else
-      ''
-    end
+  def public_key
+    self.class.public_key
+  end
+
+  def private_key
+    self.class.private_key
   end
 end

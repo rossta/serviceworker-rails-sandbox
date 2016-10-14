@@ -1,5 +1,5 @@
 import Logger from 'utils/logger';
-const logger = new Logger('[push-simple/serviceworker]');
+const logger = new Logger('[push-react/serviceworker]');
 
 logger.log("Hello!");
 
@@ -8,7 +8,7 @@ function onPush(event) {
 
   let title = (event.data && event.data.text()) || "Yay a message";
   let body = "We have received a push message";
-  let tag = "push-simple-demo-notification-tag";
+  let tag = "push-react-demo-notification-tag";
   var icon = '/assets/turtle-logo-120x120.png';
 
   event.waitUntil(
@@ -16,9 +16,4 @@ function onPush(event) {
   )
 }
 
-function onPushSubscriptionChange(event) {
-  logger.log("Push subscription change event detected", event);
-}
-
 self.addEventListener("push", onPush);
-self.addEventListener("pushsubscriptionchange", onPushSubscriptionChange);

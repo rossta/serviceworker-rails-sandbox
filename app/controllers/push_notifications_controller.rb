@@ -1,6 +1,6 @@
 class PushNotificationsController < ApplicationController
   def create
-    Rails.logger.info "Sending push notification from #{params}"
+    Rails.logger.info "Sending push notification from #{push_params.inspect}"
     subscription_params = fetch_subscription_params
 
     WebpushJob.perform_later fetch_message,
@@ -13,12 +13,16 @@ class PushNotificationsController < ApplicationController
 
   private
 
+  def push_params
+    params.permit(:message, { subscription: [:endpoint, keys: [:auth, :p256dh]]})
+  end
+
   def fetch_message
-    params.fetch(:message, "Hello, World, the time is #{Time.zone.now}")
+    push_params.fetch(:message, "Yay, you sent a push notification!")
   end
 
   def fetch_subscription_params
-    params.fetch(:subscription, extract_session_subscription)
+    @subscription_params ||= push_params.fetch(:subscription) { extract_session_subscription }
   end
 
   def extract_session_subscription
