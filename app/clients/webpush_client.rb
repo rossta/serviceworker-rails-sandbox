@@ -1,18 +1,15 @@
 class WebpushClient
-  PUBLIC_KEY = "BB9KQDaypj3mJCyrFbF5EDm-UrfnIGeomy0kYL56Mddi3LG6AFEMB_DnWUXSAmNFNOaIgTlXrT3dk2krmp9SPyg="
-  PRIVATE_KEY ="JYQ5wbkNfJ2b1Kv_t58cUJJENBIIboVv5Ijzk6a5yH8="
+  def self.public_key
+    ENV.fetch('VAPID_PUBLIC_KEY')
+  end
 
-  SUBSCRIPTION = {
-    :endpoint=>"https://fcm.googleapis.com/fcm/send/fdJm4S5rzj8:APA91bHdht6r-oXwx5EAlOIm3EFRMvSIEsQf8r79p9W6vVZ_5K9oMhEnrhahtazyTX2j7z1z30KOKCI8ATC3vuSKy_zrOmHU9zO8YwZFu4sNW6IhpHf_k6OTCrvzlwc8Q8_8hUpUU5gm",
-    :p256dh=>"BLhM3NTCXXt76nflRZCrx0DdiPTmtxLl0l-uXwSiFqdZTf5mAq8rt_VFRqutA8FwZsz5vBA-JpUZjgioehTlSdI=",
-    :auth=>"6qLda9rw3x8cG5uowvytDw=="
-  }
+  def self.public_key_bytes
+    Base64.urlsafe_decode64(public_key).bytes
+  end
 
-  FIREFOX = {
-    :endpoint => "https://updates.push.services.mozilla.com/wpush/v2/gAAAAABX9xnU2nIjElmHkBJmHpt9curGStrH1lt9pwPufsbJDsfZprpJ-rrWABFrzvNoN5E5_TsYwt27keblGUQqDccoiat-OOPryNO1kO1BXqZi0r9Ogf2cCg9q7XiyMCpHq949_OoOGW8vONE6eYbVJ-EyhKEuwCRTv5vAZgEPCNlsFQSg71c",
-    :auth => "GzdPDQvcdzj_S_GdVRsxuQ",
-    :p256dh => "BPcUY3mhrBkMsSjsZsRpfWVkfWTMydGeCfldRg_L5xCtNtdpVfmCWZQyTJ9ND3NCo_NK2E2KRGKMGPXOjFZGbDY"
-  }
+  def self.private_key
+    ENV.fetch('VAPID_PRIVATE_KEY')
+  end
 
   # Send webpush message using subscription parameters
   #
@@ -38,21 +35,16 @@ class WebpushClient
       auth: auth,
       vapid: {
         subject: "mailto:ross@rossta.net",
-        public_key: PUBLIC_KEY,
-        private_key: PRIVATE_KEY
+        public_key: public_key,
+        private_key: private_key
       }
-
-    # Webpush.new(subscription)
-    # webpush = WebPush.new(endpoint: endpoint, keys: { p256dh: p256dh, auth: auth })
-    # webpush.set_vapid_details(
-    #   "mailto:sender@example.com",
-    #   PUBLIC_KEY,
-    #   PRIVATE_KEY
-    # )
-    # webpush.send_notification(message)
   end
 
-  def test_send
-    send_notification("You're a good person, Ross", WebpushClient::SUBSCRIPTION)
+  def public_key
+    self.class.public_key
+  end
+
+  def private_key
+    self.class.private_key
   end
 end
