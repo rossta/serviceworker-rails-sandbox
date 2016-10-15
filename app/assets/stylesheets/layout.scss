@@ -8,6 +8,15 @@ footer {
   visibility: "hidden";
 }
 
+.side-nav {
+  .logo {
+    text-align: center;
+    img {
+      width: 100px;
+    }
+  }
+}
+
 // Material Design overrides
 
 main, header, footer {

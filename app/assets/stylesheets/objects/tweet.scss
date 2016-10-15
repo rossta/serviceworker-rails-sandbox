@@ -2,6 +2,7 @@
 
 .tweet {
   @include callout;
+  @include clearfix;
 
   margin-bottom: 1em;
   background-color: #f8f8ff;
