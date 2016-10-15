@@ -12,7 +12,7 @@ gem "jquery-rails"
 gem "coffee-rails"
 gem "browserify-rails"
 gem "react-rails"
-gem "turbolinks"
+gem "materialize-sass"
 gem "sdoc", "~> 0.4.0", group: :doc
 
 gem "rack-protection"

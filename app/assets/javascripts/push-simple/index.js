@@ -10,3 +10,5 @@ $(document).on('page:before-change.push-simple', function() {
 
 $(document).on('page:send-notification.push-simple', sendNotification);
 $('.send-notification-button').on('click', sendNotification);
+
+console.log("Push simple");
