@@ -10,7 +10,7 @@
   <li class="no-padding">
     <ul class="collapsible collapsible-accordion">
       <% demo_index.each do |section, pages| %>
-        <% active = (params[:controller] == 'pages' && pages.include?(params[:id])) %>
+        <% active = (params[:controller] == 'pages' && Hash[pages].has_value?(params[:id])) %>
         <li class="bold <%= 'active' if active %>">
           <a class="collapsible-header waves-effect <% 'active' if active %>"><%= section %></a>
           <div class="collapsible-body">

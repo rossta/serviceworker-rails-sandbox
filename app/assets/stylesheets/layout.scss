@@ -4,12 +4,14 @@ footer {
   padding: 0 2em;
 }
 
-main, header, footer {
-  padding-left: 300px;
-}
-
 .not-visible {
   visibility: "hidden";
+}
+
+// Material Design overrides
+
+main, header, footer {
+  padding-left: 300px;
 }
 
 @media only screen and (min-width: 993px) {
