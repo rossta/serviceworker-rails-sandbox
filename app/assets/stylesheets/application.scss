@@ -1,4 +1,6 @@
-@import "skeleton/normalize";
-@import "skeleton/skeleton";
+@import "materialize/components/color";
+$primary-color: color("deep-purple", "lighten-2") !default;
+$secondary-color: color("light-green", "base") !default;
+@import 'materialize';
 @import "layout";
 @import "objects/index";

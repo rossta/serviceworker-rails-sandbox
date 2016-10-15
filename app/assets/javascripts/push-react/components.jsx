@@ -11,18 +11,18 @@ const SendMessageButton = React.createClass({
   render() {
     let { isEnabled, isSubscribed } = this.props;
     let disabled = !isEnabled || !isSubscribed;
-    let classNames = ["button"]
+    let classNames = ["btn waves-effect waves-light"]
     if (!isSubscribed) {
       classNames.push("disabled");
     }
 
     return (
-      <button
+      <a
         onClick={this.onClick}
         className={classNames.join(' ')}
         >
         Send message
-      </button>
+      </a>
     );
   }
 });
@@ -48,14 +48,17 @@ const PushSubscriptionToggle = React.createClass({
           {this.getLabel()}
         </label>
         <div className="switch">
-          <input
-            id="push-checkbox"
-            className="cmn-toggle cmn-toggle-round-flat"
-            type="checkbox"
-            checked={isSubscribed}
-            disabled={!isEnabled}
-          />
-          <label for="push-checkbox"></label>
+          <label>
+            Off
+            <input
+              id="push-checkbox"
+              type="checkbox"
+              checked={isSubscribed}
+              disabled={!isEnabled}
+            />
+            <span className="lever"></span>
+            On
+          </label>
         </div>
       </div>
     );
@@ -74,13 +77,6 @@ const PushControls = React.createClass({
     const self = this;
 
     self.disable();
-
-    navigator.serviceWorker.register('serviceworker.js', { scope: './' })
-      .then(function(reg) {
-        logger.log(reg.scope, 'register');
-        logger.log('Service worker change, registered the service worker');
-        self.props.setup(self.onSubscribed, self.onUnsubscribed);
-      });
   },
 
   onChange() {

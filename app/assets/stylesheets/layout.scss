@@ -1,11 +1,50 @@
 @import "settings";
 
-.container { max-width: 575px; }
-
 footer {
   padding: 0 2em;
 }
 
 .not-visible {
   visibility: "hidden";
+}
+
+.side-nav {
+  .logo {
+    text-align: center;
+    img {
+      width: 100px;
+    }
+  }
+}
+
+// Material Design overrides
+
+main, header, footer {
+  padding-left: 300px;
+}
+
+@media only screen and (min-width: 993px) {
+  .container {
+    width: 85%;
+  }
+}
+
+@media only screen and (max-width : 992px) {
+  header, main, footer {
+    padding-left: 0;
+  }
+}
+
+a.button-collapse.top-nav {
+  position: absolute;
+  text-align: center;
+  height: 48px;
+  width: 48px;
+  left: -10px;
+  top: 0;
+  float: none;
+  margin-left: 1.5rem;
+  color: #fff;
+  font-size: 36px;
+  z-index: 2;
 }

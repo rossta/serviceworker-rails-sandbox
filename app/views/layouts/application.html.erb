@@ -4,8 +4,9 @@
     <title>Service Worker on Rails</title>
     <%= site_metatags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
     <%= csrf_meta_tags %>
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon"                 href="/touch-icon.png" />
@@ -13,15 +14,24 @@
     <%= yield :head %>
   </head>
   <body>
-    <div class="nav-container container">
+    <header>
       <%= render "layouts/navbar" %>
-    </div>
+
+      <%= render "layouts/sidenav" %>
+
+    </header>
     <div class="container">
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
     </div>
-    <main class="container">
-      <%= yield %>
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col s12 l12">
+            <%= yield %>
+          </div>
+        </div>
+      </div>
     </main>
     <%= render "layouts/footer" %>
     <%= render "layouts/analytics" %>

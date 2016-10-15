@@ -1,0 +1,30 @@
+<div class="container">
+  <a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a>
+</div>
+<ul id="nav-mobile" class="side-nav fixed">
+  <li>
+    <div class="userView">
+      <a href="/" class="logo"><%= image_tag 'circle-turtle.svg' %></a>
+    </div>
+  </li>
+  <li class="no-padding">
+    <ul class="collapsible collapsible-accordion">
+      <% demo_index.each do |section, pages| %>
+        <% active = (params[:controller] == 'pages' && Hash[pages].has_value?(params[:id])) %>
+        <li class="bold <%= 'active' if active %>">
+          <a class="collapsible-header waves-effect <% 'active' if active %>"><%= section %></a>
+          <div class="collapsible-body">
+            <ul>
+              <% pages.each do |title, path| %>
+                <% classes = (params[:controller] == 'pages' && params[:id] == path) ? "active" : "" %>
+                <li class="<%= classes %>">
+                  <%= link_to title, page_path(path) %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </li>
+</ul>

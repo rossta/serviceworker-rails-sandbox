@@ -8,6 +8,10 @@ function ready() {
 function setup(onSubscribed) {
   logger.log('Setting up push subscription');
 
+  if (!window.PushManager) {
+    logger.warn('Push messaging is not supported in your browser');
+  }
+
   if (!ServiceWorkerRegistration.prototype.showNotification) {
     logger.warn('Notifications are not supported in your browser');
     return;
@@ -18,18 +22,14 @@ function setup(onSubscribed) {
       // If the user accepts, let's create a notification
       if (permission === "granted") {
         logger.log('Permission to receive notifications granted!');
+        subscribe(onSubscribed);
       }
     });
     return;
+  } else {
+    logger.log('Permission to receive notifications granted!');
+    subscribe(onSubscribed);
   }
-
-  logger.log('Permission to receive notifications granted!');
-
-  if (!window.PushManager) {
-    logger.warn('Push messaging is not supported in your browser');
-  }
-
-  subscribe(onSubscribed);
 }
 
 function subscribe(onSubscribed) {
@@ -47,6 +47,7 @@ function subscribe(onSubscribed) {
 }
 
 function refreshSubscription(pushManager, subscription, onSubscribed) {
+  logger.log('Refreshing subscription');
   return subscription.unsubscribe().then((bool) => {
     pushManagerSubscribe(pushManager);
   });

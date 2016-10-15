@@ -4,6 +4,8 @@
     <strong>Objective</strong>: To display cached content while content is fetched from the network.
   </p>
 
+  <p>Once the service worker is installed, it will cache async requests for tweet data. Refresh the page and the cached results will render immediately on page load, eventually updating when and if the network response retrieves new results.</p>
+
 <div id="demo"></div>
 
 <%= javascript_include_tag 'cache-then-network' %>

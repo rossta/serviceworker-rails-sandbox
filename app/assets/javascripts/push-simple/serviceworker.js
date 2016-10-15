@@ -1,8 +1,6 @@
 import Logger from 'utils/logger';
 const logger = new Logger('[push-simple/serviceworker]');
 
-logger.log("Hello!");
-
 function onPush(event) {
   logger.log("Received push message", event);
 

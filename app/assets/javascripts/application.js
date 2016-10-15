@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
-//= require ./components
+//= require materialize-sprockets
 //= require ./nav
+//= require ./components
 //= require ./home
