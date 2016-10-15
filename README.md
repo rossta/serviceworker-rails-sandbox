@@ -1,6 +1,6 @@
 # Service Workers on Rails
 
-This sandbox demonstrates various use cases for "Service Workers on Rails". Integration of Service Workers with the Rails asset pipeline is provided by the [serviceworker-rails](https://github.com/rossta/serviceworker-rails).
+This sandbox demonstrates various use cases for "Service Workers on Rails". Integration of Service Workers with the Rails asset pipeline is provided by the [serviceworker-rails](https://github.com/rossta/serviceworker-rails) gem.
 
 ## Background
 
