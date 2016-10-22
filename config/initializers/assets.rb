@@ -31,6 +31,7 @@ Rails.application.configure do
     push-simple.js
     push-simple/manifest.json
     push-react.js
+    push-react/serviceworker.js
     push-react/manifest.json
   )
 
