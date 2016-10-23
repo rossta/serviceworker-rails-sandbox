@@ -33,6 +33,8 @@ Rails.application.configure do
     push-react.js
     push-react/serviceworker.js
     push-react/manifest.json
+    background-sync-get.js
+    background-sync-get/serviceworker.js
   )
 
   # Use ES2015 and react in asset pipeline

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   post "/subscribe" => "subscriptions#create"
   delete "/unsubscribe" => "subscriptions#destroy"
   post "/push" => "push_notifications#create"
+  get "/sync" => "sync#index"
 
   get "/*path/offline" => "welcome#offline"
 

@@ -7,3 +7,5 @@ en:
     push:
       - "Push Simple"
       - "Push React"
+    sync:
+      - "Background Sync - GET"
