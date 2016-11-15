@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   get "/*path/offline" => "welcome#offline"
 
-  get "/*id" => "pages#show", as: :page, format: false
+  get "/*id" => "pages#show", as: :page, format: false, constraints: { id: /(?!assets).*/ }
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
