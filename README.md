@@ -36,7 +36,18 @@ Examples in this sandbox are inspired by a variety of resources:
 
 ## Development
 
-Coming soon.
+Check out the project with git, run `bundle install` and copy the
+`database.yml.example` to `database.yml` and edit to fit your needs.
+
+You could also try running with Docker. The `docker-compose.yml` assumes the
+existence of an `.env.docker` file. You may want copy the `.env.docker.example`
+file and set up your own environment variables. Assuming you have Docker
+installed and running, you could simply try running `docker-compose up`. YMMV.
+
+If desired, for certain features you'll need Twitter app credentials. Example keys can be found in
+`.env.docker.example`.
+
+Good luck!
 
 ## Contributing
 

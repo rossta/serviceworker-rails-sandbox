@@ -13,3 +13,4 @@
 !/log/.keep
 /tmp
 /node_modules
+config/database.yml
