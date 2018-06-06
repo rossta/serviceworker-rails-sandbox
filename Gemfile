@@ -51,6 +51,7 @@ group :development do
   gem "rb-inotify", require: false
   gem "annotate"
   gem "spring"
+  gem "foreman"
 end
 
 group :test do
