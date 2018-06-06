@@ -8,6 +8,6 @@ machine:
     GOOGLE_CLOUD_MESSAGE_API_KEY: GOOGLE_CLOUD_MESSAGE_API_KEY
 deployment:
   production:
-    branch: master
+    branch: upgrades
     heroku:
       appname: serviceworker-rails
