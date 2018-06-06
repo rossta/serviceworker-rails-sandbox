@@ -22,7 +22,7 @@ gem "i18n-tasks"
 
 gem "twitter"
 gem "ece"
-gem "webpush", github: "rossta/webpush", branch: "master"
+gem "webpush"
 gem "sucker_punch"
 
 gem "non-stupid-digest-assets"
