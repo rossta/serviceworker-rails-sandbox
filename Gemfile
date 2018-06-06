@@ -38,7 +38,6 @@ group :development, :test do
   gem "pry-byebug"
   gem "awesome_print"
   gem "dotenv-rails"
-  gem "rubocop"
 end
 
 group :development do
