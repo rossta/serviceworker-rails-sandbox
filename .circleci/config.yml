@@ -111,6 +111,6 @@ workflows:
       - deploy:
           requires:
             - build
-        #   filters:
-        #     branches:
-        #       only: sequential-branch-filter
+          filters:
+            branches:
+              only: master
