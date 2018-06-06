@@ -83,6 +83,9 @@ jobs:
           RAILS_ENV: test
           RACK_ENV: test
 
+    - run:
+        command: bundle exec rspec
+
     - store_test_results:
         path: /tmp/circleci-test-results
     - store_artifacts:
