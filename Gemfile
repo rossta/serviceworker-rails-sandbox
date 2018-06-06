@@ -9,7 +9,6 @@ gem "puma"
 gem "sass-rails", "~> 5.0"
 gem "uglifier", ">= 1.3.0"
 gem "jquery-rails"
-gem "coffee-rails"
 gem "browserify-rails"
 gem "react-rails"
 gem "materialize-sass"
@@ -28,6 +27,8 @@ gem "sucker_punch"
 
 gem "non-stupid-digest-assets"
 gem "serviceworker-rails", github: "rossta/serviceworker-rails", branch: "master"
+
+gem "nokogiri", "~> 1.8.2"
 
 group :development, :test do
   gem "factory_girl_rails"
@@ -56,12 +57,12 @@ end
 
 group :test do
   gem "rspec-rails"
-  gem "capybara"
+  # gem "capybara"
   gem "shoulda-matchers"
   gem "database_cleaner"
   gem "launchy"
-  gem "poltergeist"
-  gem "formulaic"
+  # gem "poltergeist"
+  # gem "formulaic"
   gem "timecop"
   gem "webmock"
   gem "vcr"
