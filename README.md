@@ -11,7 +11,7 @@ The [Service Worker API](https://developer.mozilla.org/en-US/docs/Web/API/Servic
 - access push notifications and background sync APIs.
 
 Service Workers are scripts that live outside the context of a rendered page.
-This means the are some considerations for hosting Service Workers:
+This means that there are some considerations for hosting Service Workers:
 
 - service workers must be served over HTTPS
 - service workers must be served within the "scope" of the page(s) they control ([pending override capability](https://slightlyoff.github.io/ServiceWorker/spec/service_worker/#service-worker-allowed))
