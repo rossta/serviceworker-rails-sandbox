@@ -207,7 +207,7 @@ GEM
       interception (>= 0.5)
       pry
     puma (3.6.0)
-    rack (2.0.5)
+    rack (2.0.8)
     rack-protection (2.0.2)
       rack
     rack-test (0.6.3)
