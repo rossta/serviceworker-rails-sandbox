@@ -1,9 +1,9 @@
 source "https://rubygems.org"
 
-ruby "2.3.1"
+ruby "2.6.5"
 
-gem "rails", "~> 5.0.0"
-gem "pg", "~> 0.15"
+gem "rails", "~> 5.0"
+gem "pg"
 gem "puma"
 
 gem "sass-rails", "~> 5.0"
@@ -27,8 +27,6 @@ gem "sucker_punch"
 
 gem "non-stupid-digest-assets"
 gem "serviceworker-rails", github: "rossta/serviceworker-rails", branch: "master"
-
-gem "nokogiri", "~> 1.8.2"
 
 group :development, :test do
   gem "factory_girl_rails"

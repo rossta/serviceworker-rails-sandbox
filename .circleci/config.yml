@@ -18,6 +18,8 @@ jobs:
       CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
       CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
       DATABASE_URL: postgres://ubuntu:@127.0.0.1:5432/circle_test
+      RAILS_ENV: test
+      RACK_ENV: test
       TWITTER_CONSUMER_KEY: TWITTER_CONSUMER_KEY
       TWITTER_CONSUMER_SECRET: TWITTER_CONSUMER_SECRET
       TWITTER_ACCESS_TOKEN: TWITTER_ACCESS_TOKEN
@@ -34,7 +36,7 @@ jobs:
     # To see the list of pre-built images that CircleCI provides for most common languages see
     # https://circleci.com/docs/2.0/circleci-images/
     docker:
-    - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
+    - image: circleci/ruby:2.6.5-node-browsers
       command: /sbin/init
     steps:
     # Machine Setup
@@ -60,8 +62,6 @@ jobs:
     - run: if [ -z "${NODE_ENV:-}" ]; then export NODE_ENV=test; fi
     - run: export PATH="~/rossta/serviceworker-rails-sandbox/node_modules/.bin:$PATH"
     - run: npm install
-    - run: echo -e "export RAILS_ENV=test\nexport RACK_ENV=test" >> $BASH_ENV
-    - run: sed -i.bak "/gem ['\"]growl_notify\|autotest-fsevent\|rb-appscript\|rb-fsevent['\"].*, *$/ N; s/\n *//g; /gem ['\"]growl_notify\|autotest-fsevent\|rb-appscript\|rb-fsevent['\"]/ d" Gemfile
     - run: 'bundle check --path=vendor/bundle || bundle install --path=vendor/bundle
         --jobs=4 --retry=3 '
     # Save dependency cache
