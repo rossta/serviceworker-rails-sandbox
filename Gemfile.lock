@@ -206,7 +206,8 @@ GEM
     pry-rescue (1.4.4)
       interception (>= 0.5)
       pry
-    puma (3.6.0)
+    puma (4.3.3)
+      nio4r (~> 2.0)
     rack (2.0.5)
     rack-protection (2.0.2)
       rack
