@@ -14,7 +14,7 @@
     "babelify": "^7.3.0",
     "browserify": "^13.0.0",
     "browserify-incremental": "^3.1.1",
-    "lodash": "^4.11.2",
+    "lodash": "^4.17.19",
     "materialize-css": "^0.97.7",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
