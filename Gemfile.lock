@@ -177,15 +177,15 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     method_source (0.8.2)
     mini_mime (1.0.0)
-    mini_portile2 (2.3.0)
+    mini_portile2 (2.4.0)
     minitest (5.11.3)
     multipart-post (2.0.0)
     naught (1.1.0)
     nenv (0.3.0)
     newrelic_rpm (3.16.2.321)
     nio4r (2.3.1)
-    nokogiri (1.8.2)
-      mini_portile2 (~> 2.3.0)
+    nokogiri (1.10.10)
+      mini_portile2 (~> 2.4.0)
     non-stupid-digest-assets (1.0.8)
       sprockets (>= 2.0)
     notiffany (0.1.1)
@@ -373,7 +373,7 @@ DEPENDENCIES
   launchy
   materialize-sass
   newrelic_rpm (>= 3.7.3)
-  nokogiri (~> 1.8.2)
+  nokogiri (~> 1.10.10)
   non-stupid-digest-assets
   pg (~> 0.15)
   pry-byebug

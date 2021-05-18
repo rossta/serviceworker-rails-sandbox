@@ -28,7 +28,7 @@ gem "sucker_punch"
 gem "non-stupid-digest-assets"
 gem "serviceworker-rails", github: "rossta/serviceworker-rails", branch: "master"
 
-gem "nokogiri", "~> 1.8.2"
+gem "nokogiri", "~> 1.10.10"
 
 group :development, :test do
   gem "factory_girl_rails"
